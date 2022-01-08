@@ -33,7 +33,7 @@ export default {
       name: 'eventFilters',
       title: 'Event filter(s)',
       type: 'array',
-      of: [{ type: string }],
+      of: [{ type: 'string' }],
     },
     {
       name: 'eventDates',
