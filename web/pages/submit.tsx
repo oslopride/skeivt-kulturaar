@@ -38,16 +38,16 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
 
   return (
     <Layout image={image} title={title} subTitle={subTitle}>
-      <h1>Meld inn ditt arrangement</h1>
+      <h2>Meld inn ditt arrangement</h2>
       <p>Kort informasjon om kalenderen her</p>
       <form method="post" action="/api/submit" encType="multipart/form-data" className={styles.form}>
         <fieldset>
-          <h2>
+          <h3>
             <figure>
               <Info />
             </figure>
             Arrangementinformasjon
-          </h2>
+          </h3>
 
           <label htmlFor="name" aria-required="true">
             Navn på arrangementet
@@ -64,12 +64,12 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
           <small id="event-link-help-text">Lenke til Facebook arrangement f.eks.</small>
         </fieldset>
         <fieldset>
-          <h2>
+          <h3>
             <figure>
               <Calendar />
             </figure>
             Dato og klokkeslett
-          </h2>
+          </h3>
           <div className={styles.layout}>
             <div>
               <label htmlFor="start-date" aria-required="true">
@@ -98,12 +98,12 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
           </div>
         </fieldset>
         <fieldset>
-          <h2>
+          <h3>
             <figure>
               <Location />
             </figure>
             Velg sted
-          </h2>
+          </h3>
           <div className={styles.layout}>
             <div className={`${styles.checkboxContainer} ${styles.gridSpan}`}>
               <input
@@ -138,12 +138,12 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
           </div>
         </fieldset>
         <fieldset>
-          <h2>
+          <h3>
             <figure>
               <Info />
             </figure>
             Tillegsinformasjon
-          </h2>
+          </h3>
           <div>
             <label htmlFor="age-limit">Aldersgrense</label>
             <div className={styles.checkboxContainer}>
@@ -198,12 +198,12 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
           </div>
         </fieldset>
         <fieldset>
-          <h2>
+          <h3>
             <figure>
               <Calendar />
             </figure>
             Kontaktperson
-          </h2>
+          </h3>
           <p>
             Ved spørsmål så trenger redaktør kontaktinformasjon til arrangement. Dette vil ikke bli synlig i kalenderen.
           </p>

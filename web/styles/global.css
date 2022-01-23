@@ -86,7 +86,7 @@ button {
   align-items: center;
   border-radius: 50px;
   padding: 24px 64px;
-  background-color: #ff4fa4;
+  background-color: var(--color-green);
   text-transform: uppercase;
   text-align: center;
   display: inline-block;
@@ -94,13 +94,11 @@ button {
   padding: 1rem 1.75rem;
   text-decoration: none;
   cursor: pointer;
-  color: #2b193c;
+  color: var(--color-foreground);
   font-weight: bold;
   transition: color 0.3s, background 0.3s;
   border: none;
 }
 button:hover,
 button:focus {
-  color: var(--color-foreground-light);
-  background-color: var(--color-purple);
 }

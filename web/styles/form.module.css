@@ -15,7 +15,7 @@
   color: grey;
 }
 
-.form h2 {
+.form h3 {
   display: flex;
   align-items: center;
   color: var(--color-foreground);
@@ -25,7 +25,7 @@
   margin-bottom: 0;
 }
 
-.form h2 figure {
+.form h3 figure {
   display: inline-flex;
   align-items: center;
   width: 40px;
