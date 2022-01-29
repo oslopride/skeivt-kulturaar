@@ -28,6 +28,14 @@
     {
       "name": "part:@sanity/desk-tool/structure",
       "path": "./desk-structure/index.js"
+    },
+    {
+      "implements": "part:@sanity/base/document-actions/resolver",
+      "path": "./actions"
+    },
+    {
+      "implements": "part:@sanity/base/document-badges/resolver",
+      "path": "./badges"
     }
   ]
 }
