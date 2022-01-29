@@ -58,8 +58,14 @@ export default function SubmitEvent({
             formData.append("end-date", target["end-date"].value);
             formData.append("start-time", target["end-time"].value);
             formData.append("end-time", target["end-time"].value);
-            formData.append("address", target["address"].value);
-            formData.append("postalNumber", target["postalNumber"].value);
+            formData.append(
+              "address",
+              target["address"] ? target["address"].value : ""
+            );
+            formData.append(
+              "postalNumber",
+              target["postalNumber"] ? target["postalNumber"].value : ""
+            );
             formData.append(
               "age-limit-age",
               target["age-limit-age"] ? target["age-limit-age"].value : ""
@@ -75,7 +81,7 @@ export default function SubmitEvent({
             formData.append("phone-number", target["phone-number"].value);
             formData.append("contact-email", target["contact-email"].value);
             formData.append("contact-info", target["contact-info"].value);
-            formData.append("county", county ? county[0] : "");
+            formData.append("county", county && county[0] ? county[0] : "");
             formData.append(
               "image",
               target["image"].files && target["image"].files[0]
