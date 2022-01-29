@@ -13,16 +13,16 @@ handler.use(middleware);
 type SanityEvent = {
   eventName: string;
   eventDescription: string;
-  eventLink: string;
+  eventLink?: string;
   eventTypes: string[];
   eventFilters: string[];
   address: string;
   postalCode: string;
   county: string;
-  digitalEventUrl: string;
+  digitalEventUrl?: string;
   ageLimit: number;
   ticketPrice: number;
-  ticketUrl: string;
+  ticketUrl?: string;
   contactName: string;
   pronoun: string;
   tlfNr: string;
@@ -47,13 +47,11 @@ handler.post(async (req: any, res: NextApiResponse) => {
     const sanityEvent: SanityEvent = {
       eventName: req.body["name"][0],
       eventDescription: req.body["event-info"][0],
-      eventLink: req.body["event-link"][0],
       eventTypes: [""],
       eventFilters: [""],
       address: req.body["address"][0],
       postalCode: req.body["postalNumber"][0],
       county: req.body["county"][0],
-      digitalEventUrl: req.body["digital-event-link"][0],
       ageLimit:
         req.body["age-limit-age"] &&
         req.body["age-limit-age"][0] !== "" &&
@@ -67,7 +65,6 @@ handler.post(async (req: any, res: NextApiResponse) => {
           ? parseInt(req.body["ticket-price"][0])
           : 0,
       contactName: req.body["organizer-name"][0],
-      ticketUrl: req.body["ticket-purchase-link"][0],
       pronoun: req.body["pronoun"][0],
       tlfNr: req.body["phone-number"][0],
       contactEmail: req.body["contact-email"][0],
@@ -90,6 +87,18 @@ handler.post(async (req: any, res: NextApiResponse) => {
         },
       ],
     };
+
+    if (req.body["ticket-purchase-link"][0] !== "") {
+      sanityEvent["ticketUrl"] = req.body["ticket-purchase-link"][0];
+    }
+
+    if (req.body["event-link"][0]) {
+      sanityEvent["eventLink"] = req.body["event-link"][0];
+    }
+
+    if (req.body["digital-event-link"][0]) {
+      sanityEvent["digitalEventUrl"] = req.body["digital-event-link"][0];
+    }
 
     sanity
       .create({
