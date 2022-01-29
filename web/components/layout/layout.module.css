@@ -17,6 +17,16 @@
   color: var(--color-foreground-light);
 }
 
+.headerNav {
+  display: none;
+}
+
+@media screen and (min-width: 1065px) {
+  .headerNav {
+    display: block;
+  }
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -101,6 +111,12 @@
   gap: 50px;
 }
 
+@media screen and (max-width: 1064px) {
+  .headerNav ul {
+    flex-direction: column;
+  }
+}
+
 .headerNav li {
   display: flex;
   align-items: center;
@@ -109,7 +125,6 @@
 
 .headerNav a:visited, .headerNav a:link {
   text-decoration: none;
-
 }
 
 .submitLink a:visited, .submitLink a:link {
