@@ -1,27 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-<<<<<<< HEAD
-import type { NextApiResponse } from 'next';
-import { createReadStream } from 'fs'
-
-import middleware from '../../middleware/middleware';
-import nextConnect from 'next-connect';
-import sanity from '../../sanity';
-=======
 import type { NextApiResponse } from "next";
-import sanityClient from "@sanity/client";
+import { createReadStream } from "fs";
+
 import middleware from "../../middleware/middleware";
 import nextConnect from "next-connect";
-import { DATASET, PROJECT_ID } from "../../sanity";
->>>>>>> add initial Sanity submit query for events
+import sanity from "../../sanity";
 
 const handler = nextConnect();
 handler.use(middleware);
-const sanity = sanityClient({
-  projectId: PROJECT_ID,
-  dataset: DATASET,
-  token: process.env.EDITOR_SANITY_ACCESS_TOKEN,
-  apiVersion: "2021-12-19",
-});
 
 type SanityEvent = {
   eventName: string;
@@ -44,8 +30,8 @@ type SanityEvent = {
 };
 
 handler.post(async (req: any, res: NextApiResponse) => {
-  console.log(req.body);
-  console.log(req.files["image"]);
+  console.log("Body:", req.body);
+  console.log("Image:", req.files["image"]);
 
   if (
     req.body["password"][0] !== "" ||
@@ -64,7 +50,7 @@ handler.post(async (req: any, res: NextApiResponse) => {
       eventFilters: [""],
       address: req.body["address"][0],
       postalCode: req.body["postalNumber"][0],
-      county: "",
+      county: req.body["county"][0],
       digitalEventUrl: "",
       ageLimit:
         req.body["age-limit-age"] &&
@@ -85,34 +71,49 @@ handler.post(async (req: any, res: NextApiResponse) => {
       contactEmail: req.body["contact-email"][0],
       additionalInfo: req.body["contact-info"][0],
     };
-    console.log("Event info:", sanityEvent);
-    if (req.files["image"][0].size > 0) {
-      console.log("Hello friend");
-    }
-    res.status(200).end();
-    // parse form, redirect on success
-    if (req.files.image?.[0]) {
-      const fileStream = createReadStream(req.files.image[0].path);
-      const asset = await sanity.assets.upload("image", fileStream as any, { contentType: req.files.image[0].headers['content-type'], filename: req.files.image[0].originalFilename })
-      console.log(asset);
-    }
-    res.redirect(307, '/thanks');
-  } catch (err) {
-    console.log(err)
-    res.status(500).send({ error: 'failed to fetch data' });
-    // sanity
-    //   .create({
-    //     _type: 'eventRequest',
-    //     eventName: 'First test event',
-    //     eventDescription: '',
-    //     eventDates: ['2017-02-12T09:15:00Z'],
-    //     eventEmail: '',
-    //   })
-    //   .then((res) => {
-    //     console.log('Response:', res);
-    //   });
+
+    sanity
+      .create({
+        _type: "eventRequest",
+        ...sanityEvent,
+      })
+      .then((res) => {
+        console.log("Response:", res);
+        const documentId = res["_id"];
+        if (
+          req.files.image?.[0] &&
+          req.files["image"][0].size > 0 &&
+          documentId
+        ) {
+          const fileStream = createReadStream(req.files.image[0].path);
+          sanity.assets
+            .upload("image", fileStream as any, {
+              contentType: req.files.image[0].headers["content-type"],
+              filename: req.files.image[0].originalFilename,
+            })
+            .then((imgAsset) => {
+              console.log("The image was uploaded!", imgAsset);
+              return sanity
+                .patch(documentId)
+                .set({
+                  image: {
+                    _type: "image",
+                    asset: {
+                      _type: "reference",
+                      _ref: imgAsset._id,
+                    },
+                  },
+                })
+                .commit();
+            });
+        }
+      });
+    res.status(201).end();
     //res.redirect(307, "/thanks");
-  } 
+  } catch (err) {
+    console.log("Error:", err);
+    res.status(500).send({ error: "failed to fetch data" });
+  }
 });
 
 export const config = {

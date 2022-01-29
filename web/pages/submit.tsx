@@ -1,31 +1,35 @@
-import type { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import Multiselect from 'multiselect-react-dropdown';
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import Multiselect from "multiselect-react-dropdown";
 
-import { Calendar } from '../components/icons/calendar';
-import { Info } from '../components/icons/info';
-import { Location } from '../components/icons/location';
-import Layout from '../components/layout';
-import sanity, { urlFor } from '../sanity';
+import { Calendar } from "../components/icons/calendar";
+import { Info } from "../components/icons/info";
+import { Location } from "../components/icons/location";
+import Layout from "../components/layout";
+import sanity, { urlFor } from "../sanity";
 
-import styles from '../styles/form.module.css';
+import styles from "../styles/form.module.css";
 
 const COUNTIES = [
-  'Oslo',
-  'Viken',
-  'Rogaland',
-  'Møre og Romsdal',
-  'Nordland',
-  'Innlandet',
-  'Vestfold og Telemark',
-  'Agder',
-  'Vestland',
-  'Trøndelag',
-  'Troms og Finnmark',
+  "Oslo",
+  "Viken",
+  "Rogaland",
+  "Møre og Romsdal",
+  "Nordland",
+  "Innlandet",
+  "Vestfold og Telemark",
+  "Agder",
+  "Vestland",
+  "Trøndelag",
+  "Troms og Finnmark",
 ] as const;
 
-export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function SubmitEvent({
+  image,
+  title,
+  subTitle,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const [ageLimit, setAgelimit] = useState(false);
   const [isPhysical, setIsPhysical] = useState(true);
   const [isDigital, setIsDigital] = useState(false);
@@ -33,14 +37,65 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
 
   const { getRootProps, getInputProps } = useDropzone({
     maxSize: 5000000,
-    accept: '.jpg,.png,.jpeg',
+    accept: ".jpg,.png,.jpeg",
   });
 
   return (
     <Layout image={image} title={title} subTitle={subTitle}>
       <h2>Meld inn ditt arrangement</h2>
       <p>Kort informasjon om kalenderen her</p>
-      <form method="post" action="/api/submit" encType="multipart/form-data" className={styles.form}>
+      <form
+        className={styles.form}
+        onSubmit={(e) => {
+          e.preventDefault();
+          const target: any = e.target;
+          try {
+            const formData = new FormData();
+            formData.append("name", target["name"].value);
+            formData.append("organizer-name", target["organizer-name"].value);
+            formData.append("event-link", target["event-link"].value);
+            formData.append("start-date", target["start-date"].value);
+            formData.append("end-date", target["end-date"].value);
+            formData.append("start-time", target["end-time"].value);
+            formData.append("end-time", target["end-time"].value);
+            formData.append("address", target["address"].value);
+            formData.append("postalNumber", target["postalNumber"].value);
+            formData.append(
+              "age-limit-age",
+              target["age-limit-age"] ? target["age-limit-age"].value : ""
+            );
+            formData.append("ticket-price", target["ticket-price"].value);
+            formData.append(
+              "ticket-purchase-link",
+              target["ticket-purchase-link"].value
+            );
+            formData.append("event-info", target["event-info"].value);
+            formData.append("contact-name", target["contact-name"].value);
+            formData.append("pronoun", target["pronoun"].value);
+            formData.append("phone-number", target["phone-number"].value);
+            formData.append("contact-email", target["contact-email"].value);
+            formData.append("contact-info", target["contact-info"].value);
+            formData.append("county", county ? county[0] : "");
+            formData.append(
+              "image",
+              target["image"].files && target["image"].files[0]
+                ? target["image"].files[0]
+                : new Blob()
+            );
+
+            formData.append("password", target["password"].value);
+            formData.append("username", target["username"].value);
+            formData.append("withdraw_amount", target["withdraw_amount"].value);
+
+            fetch("/api/submit", {
+              method: "POST",
+              body: formData,
+            });
+          } catch (err) {
+            console.log("Error:", err);
+          }
+        }}
+      >
         <fieldset>
           <h3>
             <figure>
@@ -60,8 +115,14 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
           <input name="organizer-name" required placeholder="Arrangørnavn" />
 
           <label htmlFor="event-link">Lenke til arrangementet</label>
-          <input name="event-link" placeholder="URL" aria-describedby="event-link-help-text" />
-          <small id="event-link-help-text">Lenke til Facebook arrangement f.eks.</small>
+          <input
+            name="event-link"
+            placeholder="URL"
+            aria-describedby="event-link-help-text"
+          />
+          <small id="event-link-help-text">
+            Lenke til Facebook arrangement f.eks.
+          </small>
         </fieldset>
         <fieldset>
           <h3>
@@ -121,21 +182,44 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
               />
               <label htmlFor="digital">Digitalt</label>
             </div>
-            <div>
-              <label htmlFor="address" aria-required={isPhysical}>
-                Addresse
-              </label>
-              <input name="address" required={isPhysical} />
-            </div>
-            <div>
-              <label htmlFor="postalNumber">Postnummer</label>
-              <input name="postalNumber" />
-            </div>
+            {isDigital && (
+              <div>
+                <label htmlFor="event-link">Lenke til digital event</label>
+                <input
+                  name="digital-event-link"
+                  placeholder="URL"
+                  aria-describedby="digital-event-link"
+                />
+              </div>
+            )}
+            {isPhysical && (
+              <>
+                <div>
+                  <label htmlFor="address" aria-required={isPhysical}>
+                    Addresse
+                  </label>
+                  <input name="address" required={isPhysical} />
+                </div>
+                <div>
+                  <label htmlFor="postalNumber">Postnummer</label>
+                  <input name="postalNumber" />
+                </div>
+              </>
+            )}
           </div>
-          <div className={styles.gridSpan}>
-            <label htmlFor="county">Fylke</label>
-            <Multiselect options={COUNTIES} placeholder="Velg fylke" singleSelect isObject={false} selectedValues={county} onSelect={(item) => setCounty(item)} />
-          </div>
+          {isPhysical && (
+            <div className={styles.gridSpan}>
+              <label htmlFor="county">Fylke</label>
+              <Multiselect
+                options={COUNTIES}
+                placeholder="Velg fylke"
+                singleSelect
+                isObject={false}
+                selectedValues={county}
+                onSelect={(item) => setCounty(item)}
+              />
+            </div>
+          )}
         </fieldset>
         <fieldset>
           <h3>
@@ -152,7 +236,7 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
                 type="checkbox"
                 checked={ageLimit}
                 onChange={() => setAgelimit((prev) => !prev)}
-              />{' '}
+              />{" "}
               Ja
             </div>
             {ageLimit && (
@@ -160,7 +244,12 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
                 <label htmlFor="age-limit-age" aria-required={ageLimit}>
                   Spesifiser alder
                 </label>
-                <input name="age-limit-age" placeholder="18" type="number" required={ageLimit} />
+                <input
+                  name="age-limit-age"
+                  placeholder="18"
+                  type="number"
+                  required={ageLimit}
+                />
               </div>
             )}
             <div>
@@ -172,7 +261,9 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
               <label htmlFor="ticket-free">Gratis</label>
             </div>
             <div>
-              <label htmlFor="ticket-purchase-link">Eventuell lenke til billettkjøp:</label>
+              <label htmlFor="ticket-purchase-link">
+                Eventuell lenke til billettkjøp:
+              </label>
               <input name="ticket-purchase-link" placeholder="URL" />
             </div>
             <div>
@@ -182,7 +273,7 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
             <label htmlFor="image">Last opp bilde</label>
             <div>
               <div className={styles.dropzone} {...getRootProps()}>
-                <input {...getInputProps({ name: 'image' })} />
+                <input type="file" {...getInputProps({ name: "image" })} />
                 <p>+</p>
                 <p>Trykk eller drag &apos;n drop filer her...</p>
               </div>
@@ -205,7 +296,8 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
             Kontaktperson
           </h3>
           <p>
-            Ved spørsmål så trenger redaktør kontaktinformasjon til arrangement. Dette vil ikke bli synlig i kalenderen.
+            Ved spørsmål så trenger redaktør kontaktinformasjon til arrangement.
+            Dette vil ikke bli synlig i kalenderen.
           </p>
           <div className={styles.layout}>
             <div>
@@ -230,20 +322,43 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
             </div>
             <div className={styles.gridSpan}>
               <label htmlFor="contact-info">Informasjon til redaktør</label>
-              <textarea name="contact-info" placeholder="Informasjon til redaktør" />
+              <textarea
+                name="contact-info"
+                placeholder="Informasjon til redaktør"
+              />
             </div>
           </div>
         </fieldset>
         <fieldset>
-          <label htmlFor="agree">Jeg samtykker til at min persondata blir lagret</label>
+          <label htmlFor="agree">
+            Jeg samtykker til at min persondata blir lagret
+          </label>
           <input type="checkbox" name="agree" />
         </fieldset>
         <p>
           <button>Send inn arrangement</button>
         </p>
-        <input type="text" name="password" className={styles.form_hp} tabIndex={-1} autoComplete="off" />
-        <input type="text" name="username" className={styles.form_hp} tabIndex={-1} autoComplete="off" />
-        <input type="text" name="withdraw_amount" className={styles.form_hp} tabIndex={-1} autoComplete="off" />
+        <input
+          type="text"
+          name="password"
+          className={styles.form_hp}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+        <input
+          type="text"
+          name="username"
+          className={styles.form_hp}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+        <input
+          type="text"
+          name="withdraw_amount"
+          className={styles.form_hp}
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </form>
     </Layout>
   );
@@ -258,7 +373,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const res = await sanity.fetch(
     `*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`
   );
-  const image = urlFor(res?.header?.background).auto('format').url().toString();
+  const image = urlFor(res?.header?.background).auto("format").url().toString();
   return {
     props: {
       image: image || null,
