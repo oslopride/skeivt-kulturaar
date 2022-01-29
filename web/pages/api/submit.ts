@@ -137,7 +137,6 @@ handler.post(async (req: any, res: NextApiResponse) => {
         }
       });
     res.status(201).end();
-    //res.redirect(307, "/thanks");
   } catch (err) {
     console.log("Error:", err);
     res.status(500).send({ error: "failed to fetch data" });
