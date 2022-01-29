@@ -88,6 +88,12 @@ export default function SubmitEvent({
                 ? target["image"].files[0]
                 : new Blob()
             );
+            formData.append(
+              "digital-event-link",
+              target["digital-event-link"]
+                ? target["digital-event-link"].value
+                : ""
+            );
 
             formData.append("password", target["password"].value);
             formData.append("username", target["username"].value);

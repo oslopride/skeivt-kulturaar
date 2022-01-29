@@ -51,7 +51,7 @@ handler.post(async (req: any, res: NextApiResponse) => {
       address: req.body["address"][0],
       postalCode: req.body["postalNumber"][0],
       county: req.body["county"][0],
-      digitalEventUrl: "",
+      digitalEventUrl: req.body["digital-event-link"][0],
       ageLimit:
         req.body["age-limit-age"] &&
         req.body["age-limit-age"][0] !== "" &&
