@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiResponse } from "next";
 import { createReadStream } from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 import middleware from "../../middleware/middleware";
 import nextConnect from "next-connect";
@@ -27,6 +28,7 @@ type SanityEvent = {
   tlfNr: string;
   contactEmail: string;
   additionalInfo: string;
+  eventDates: { _key: string; eventStart: string; eventEnd: string }[];
 };
 
 handler.post(async (req: any, res: NextApiResponse) => {
@@ -70,6 +72,23 @@ handler.post(async (req: any, res: NextApiResponse) => {
       tlfNr: req.body["phone-number"][0],
       contactEmail: req.body["contact-email"][0],
       additionalInfo: req.body["contact-info"][0],
+      eventDates: [
+        {
+          _key: uuidv4(),
+          eventStart:
+            req.body["start-date"] && req.body["start-time"]
+              ? new Date(
+                  req.body["start-date"] + " " + req.body["start-time"]
+                ).toISOString()
+              : "",
+          eventEnd:
+            req.body["end-date"] && req.body["end-time"]
+              ? new Date(
+                  req.body["end-date"] + " " + req.body["end-time"]
+                ).toISOString()
+              : "",
+        },
+      ],
     };
 
     sanity
