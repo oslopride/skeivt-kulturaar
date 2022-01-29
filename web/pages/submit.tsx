@@ -190,7 +190,9 @@ export default function SubmitEvent({
             </div>
             {isDigital && (
               <div>
-                <label htmlFor="event-link">Lenke til digital event</label>
+                <label htmlFor="digital-event-link">
+                  Lenke til digital event
+                </label>
                 <input
                   name="digital-event-link"
                   placeholder="URL"
