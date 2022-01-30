@@ -46,7 +46,17 @@ export default function Layout({ children, image, title, subTitle }: LayoutProps
             <div className={styles.headerContent}>
               <div className={styles.topContainer}>
                 <div className={styles.logoContainer}>
-                  <Image src="/logo.png" width="272" height="154" alt="Skeivt Kulturår logo" className={styles.logo} />
+                  <Link href="/">
+                    <a>
+                      <Image
+                        src="/logo.png"
+                        width="272"
+                        height="154"
+                        alt="Skeivt Kulturår arrangementer"
+                        className={styles.logo}
+                      />
+                    </a>
+                  </Link>
                 </div>
                 <nav aria-label="Main navigation" className={styles.headerNav}>
                   <ul>
