@@ -1,16 +1,22 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import BlockContent from '@sanity/block-content-to-react';
 
-import sanity, { urlFor } from '../sanity'
-import Layout from "../components/layout";
+import sanity, { urlFor } from '../sanity';
+import Layout from '../components/layout';
 
-export default function About({ image, title, subTitle, aboutBody, aboutTitle }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function About({
+  image,
+  title,
+  subTitle,
+  aboutBody,
+  aboutTitle,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout title={title} subTitle={subTitle} image={image}>
       <h2>{aboutTitle}</h2>
-      <BlockContent blocks={aboutBody}/>
+      <BlockContent blocks={aboutBody} />
     </Layout>
-  )
+  );
 }
 
 export type Data = {
@@ -19,14 +25,17 @@ export type Data = {
   subTitle?: string | null;
   aboutBody?: any;
   aboutTitle?: string | null;
-}
-export const getStaticProps: GetStaticProps = async (context) => {
+};
+export const getStaticProps: GetStaticProps = async () => {
   const query = `{
     "configuration": *[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0],
     "about": *[_id in ["global_about", "drafts.global_about"]] | order(_updatedAt desc) [0],
-  }`
-  const res = await sanity.fetch(query)
-  const image = urlFor(res?.configuration?.header?.background).auto('format').url().toString();
+  }`;
+  const res = await sanity.fetch(query);
+  const image = urlFor(res?.configuration?.header?.background)
+    .auto('format')
+    .url()
+    .toString();
 
   return {
     props: {
@@ -36,6 +45,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       title: res?.configuration?.header?.title || null,
       subTitle: res?.configuration?.header?.subtitle || null,
     },
-    revalidate: 3600
-  }
-}
+    revalidate: 3600,
+  };
+};

@@ -12,7 +12,12 @@ export type LayoutProps = {
   title?: string | null;
   subTitle?: string | null;
 };
-export default function Layout({ children, image, title, subTitle }: LayoutProps) {
+export default function Layout({
+  children,
+  image,
+  title,
+  subTitle,
+}: LayoutProps) {
   return (
     <>
       <Head>
@@ -21,7 +26,12 @@ export default function Layout({ children, image, title, subTitle }: LayoutProps
         <link rel="shortcut icon" href="/favicon.png" />
       </Head>
       <div id="outer-container">
-        <Menu right pageWrapId={'page-wrap'} outerContainerId={'outer-container'} width={400}>
+        <Menu
+          right
+          pageWrapId={'page-wrap'}
+          outerContainerId={'outer-container'}
+          width={400}
+        >
           <nav aria-label="Main navigation" className={styles.headerNav}>
             <ul>
               <li>
@@ -40,7 +50,12 @@ export default function Layout({ children, image, title, subTitle }: LayoutProps
           <header className={styles.header}>
             {image && (
               <div className={styles.imgContainer}>
-                <Image alt="" src={image} layout="fill" className={styles.backgroundImage} />
+                <Image
+                  alt=""
+                  src={image}
+                  layout="fill"
+                  className={styles.backgroundImage}
+                />
               </div>
             )}
             <div className={styles.headerContent}>

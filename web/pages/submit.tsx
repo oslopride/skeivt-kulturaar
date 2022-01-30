@@ -1,28 +1,28 @@
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import { useState } from "react";
-import { useDropzone } from "react-dropzone";
-import Multiselect from "multiselect-react-dropdown";
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import Multiselect from 'multiselect-react-dropdown';
 
-import { Calendar } from "../components/icons/calendar";
-import { Info } from "../components/icons/info";
-import { Location } from "../components/icons/location";
-import Layout from "../components/layout";
-import sanity, { urlFor } from "../sanity";
+import { Calendar } from '../components/icons/calendar';
+import { Info } from '../components/icons/info';
+import { Location } from '../components/icons/location';
+import Layout from '../components/layout';
+import sanity, { urlFor } from '../sanity';
 
-import styles from "../styles/form.module.css";
+import styles from '../styles/form.module.css';
 
 const COUNTIES = [
-  "Oslo",
-  "Viken",
-  "Rogaland",
-  "Møre og Romsdal",
-  "Nordland",
-  "Innlandet",
-  "Vestfold og Telemark",
-  "Agder",
-  "Vestland",
-  "Trøndelag",
-  "Troms og Finnmark",
+  'Oslo',
+  'Viken',
+  'Rogaland',
+  'Møre og Romsdal',
+  'Nordland',
+  'Innlandet',
+  'Vestfold og Telemark',
+  'Agder',
+  'Vestland',
+  'Trøndelag',
+  'Troms og Finnmark',
 ] as const;
 
 export default function SubmitEvent({
@@ -37,7 +37,7 @@ export default function SubmitEvent({
 
   const { getRootProps, getInputProps } = useDropzone({
     maxSize: 5000000,
-    accept: ".jpg,.png,.jpeg",
+    accept: '.jpg,.png,.jpeg',
   });
 
   return (
@@ -51,14 +51,14 @@ export default function SubmitEvent({
           const target = e.target as HTMLFormElement;
           try {
             const formData = new FormData(target);
-            formData.append("county", county && county[0] ? county[0] : "");
+            formData.append('county', county && county[0] ? county[0] : '');
 
-            fetch("/api/submit", {
-              method: "POST",
+            fetch('/api/submit', {
+              method: 'POST',
               body: formData,
             });
           } catch (err) {
-            console.log("Error:", err);
+            console.log('Error:', err);
           }
         }}
       >
@@ -204,7 +204,7 @@ export default function SubmitEvent({
                 type="checkbox"
                 checked={ageLimit}
                 onChange={() => setAgelimit((prev) => !prev)}
-              />{" "}
+              />{' '}
               Ja
             </div>
             {ageLimit && (
@@ -241,7 +241,7 @@ export default function SubmitEvent({
             <label htmlFor="image">Last opp bilde</label>
             <div>
               <div className={styles.dropzone} {...getRootProps()}>
-                <input type="file" {...getInputProps({ name: "image" })} />
+                <input type="file" {...getInputProps({ name: 'image' })} />
                 <p>+</p>
                 <p>Trykk eller drag &apos;n drop filer her...</p>
               </div>
@@ -337,11 +337,11 @@ export type Data = {
   title?: string | null;
   subTitle?: string | null;
 };
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
   const res = await sanity.fetch(
     `*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`
   );
-  const image = urlFor(res?.header?.background).auto("format").url().toString();
+  const image = urlFor(res?.header?.background).auto('format').url().toString();
   return {
     props: {
       image: image || null,
