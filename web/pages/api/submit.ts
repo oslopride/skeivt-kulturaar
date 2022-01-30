@@ -76,7 +76,7 @@ handler.post(async (req: any, res: NextApiResponse) => {
       ],
     };
 
-    if (req.body['ticket-purchase-link']?.[0] !== '') {
+    if (req.body['ticket-purchase-link']?.[0]) {
       sanityEvent['ticketUrl'] = req.body['ticket-purchase-link'][0];
     }
 
