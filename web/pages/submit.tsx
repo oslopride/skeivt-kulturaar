@@ -173,6 +173,7 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
                 checked={isPhysical}
                 onChange={(e) => setIsPhysical(e.target.checked)}
                 className={styles.input}
+                disabled={!isDigital}
               />
               <label htmlFor="physical">Fysisk</label>
               <input
@@ -181,6 +182,7 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
                 checked={isDigital}
                 onChange={(e) => setIsDigital(e.target.checked)}
                 className={styles.input}
+                disabled={!isPhysical}
               />
               <label htmlFor="digital">Digitalt</label>
             </div>
