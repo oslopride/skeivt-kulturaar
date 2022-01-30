@@ -53,7 +53,7 @@
   margin-left: 0.25em;
 }
 
-.form button {
+.form .button {
   margin-top: 64px;
   padding: 24px;
   font-weight: bold;
@@ -71,8 +71,7 @@
   margin: 0;
 }
 
-.form input,
-.form textarea {
+.form .input {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -84,21 +83,18 @@
   min-height: 60px;
 }
 
-.form input[type='checkbox'] {
+.form .input[type='checkbox'] {
   width: 24px;
   height: 24px;
 }
 
-.form input::placeholder,
-.form textarea::placeholder {
+.form .input::placeholder {
   color: var(--color-grey);
   font-size: 16px;
 }
 
-.form input:focus,
-.form input:active,
-.form textarea:focus,
-.form textarea:active {
+.form .input:focus,
+.form .input:active {
   border-color: var(--color-green);
   outline: none;
 }
