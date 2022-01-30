@@ -6,30 +6,10 @@ import { v4 as uuidv4 } from 'uuid';
 import middleware from '../../middleware/middleware';
 import nextConnect from 'next-connect';
 import sanity from '../../sanity';
+import { SanityEvent } from '../../types/sanity';
 
 const handler = nextConnect();
 handler.use(middleware);
-
-type SanityEvent = {
-  eventName: string;
-  eventDescription: string;
-  eventLink?: string;
-  eventTypes: string[];
-  eventFilters: string[];
-  address: string;
-  postalCode: string;
-  county: string;
-  digitalEventUrl?: string;
-  ageLimit: number;
-  ticketPrice: number;
-  ticketUrl?: string;
-  contactName: string;
-  pronoun: string;
-  tlfNr: string;
-  contactEmail: string;
-  additionalInfo: string;
-  eventDates: { _key: string; eventStart: string; eventEnd: string }[];
-};
 
 handler.post(async (req: any, res: NextApiResponse) => {
   console.log('Body:', req.body);

@@ -6,8 +6,10 @@ import styles from '../styles/event-list.module.css';
 
 import { Event } from '../components/event';
 import Layout from '../components/layout';
+import { PublicSanityEvent } from '../types/sanity';
 
-export default function EventList({ image, title, subTitle }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function EventList({ image, title, subTitle, events }: InferGetStaticPropsType<typeof getStaticProps>) {
+  console.log(events);
   return (
     <Layout image={image} title={title} subTitle={subTitle}>
       <ol className={styles.eventList}>
@@ -28,23 +30,32 @@ export default function EventList({ image, title, subTitle }: InferGetStaticProp
   );
 }
 
-export type Data = {
-  image?: string | null;
-  title?: string | null;
-  subTitle?: string | null;
+export type EventListProps = {
+  image: string | null;
+  title: string | null;
+  subTitle: string | null;
+  events: Array<PublicSanityEvent>;
 };
-export const getStaticProps: GetStaticProps = async () => {
-  const data = await sanity.fetch(
-    `*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`
-  );
-  const image = urlFor(data?.header?.background).auto('format').url().toString();
+export const getStaticProps: GetStaticProps<EventListProps> = async () => {
+  // be sure to strip away personal information before passing it down, we'll painstakingly and explicitly select exactly what fields
+  // we want from the query (:
+  const fields =
+    '_id,additionalInfo,address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,image,postalCode,ticketPrice,ticketUrl';
+  const query = `{
+    "configuration": *[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0],
+    "events": *[_type == 'eventRequest' && approved == true]{${fields}},
+  }`;
+  const res = await sanity.fetch(query);
+  const image = urlFor(res?.configuration?.header?.background).auto('format').url().toString();
+  const props: EventListProps = {
+    image: image || null,
+    title: res?.configuration?.header?.title || null,
+    subTitle: res?.configuration?.header?.subtitle || null,
+    events: res?.events || [],
+  };
 
   return {
-    props: {
-      image: image || null,
-      title: data?.header?.title || null,
-      subTitle: data?.header?.subtitle || null,
-    },
+    props,
     revalidate: 3600,
   };
 };
