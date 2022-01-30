@@ -12,12 +12,9 @@ export default function SubmitEvent({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Layout title={title} subTitle={subTitle} image={image}>
-      <h2 className={styles.header}>
-        Takk for ditt bidrag til Skeivt kulturårs arrangementkalender
-      </h2>
+      <h2 className={styles.header}>Takk for ditt bidrag til Skeivt kulturårs arrangementkalender</h2>
       <p className={styles.p}>
-        Du vil ikke aktivt se at arrangementet legger seg i kalender, da den
-        trenger å gå gjennom en moderator.
+        Du vil ikke aktivt se at arrangementet legger seg i kalender, da den trenger å gå gjennom en moderator.
       </p>
       <p className={styles.p}>
         <Link href="/">

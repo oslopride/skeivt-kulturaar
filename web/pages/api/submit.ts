@@ -35,11 +35,7 @@ handler.post(async (req: any, res: NextApiResponse) => {
   console.log('Body:', req.body);
   console.log('Image:', req.files['image']);
 
-  if (
-    req.body['password'][0] !== '' ||
-    req.body['username'][0] !== '' ||
-    req.body['withdraw_amount'][0] !== ''
-  ) {
+  if (req.body['password'][0] !== '' || req.body['username'][0] !== '' || req.body['withdraw_amount'][0] !== '') {
     res.status(403).end();
   }
 
@@ -53,15 +49,11 @@ handler.post(async (req: any, res: NextApiResponse) => {
       postalCode: req.body['postalNumber'][0],
       county: req.body['county'][0],
       ageLimit:
-        req.body['age-limit-age'] &&
-        req.body['age-limit-age'][0] !== '' &&
-        !isNaN(req.body['age-limit-age'][0])
+        req.body['age-limit-age'] && req.body['age-limit-age'][0] !== '' && !isNaN(req.body['age-limit-age'][0])
           ? parseInt(req.body['age-limit-age'][0])
           : 0,
       ticketPrice:
-        req.body['ticket-price'] &&
-        req.body['ticket-price'][0] !== '' &&
-        !isNaN(req.body['ticket-price'][0])
+        req.body['ticket-price'] && req.body['ticket-price'][0] !== '' && !isNaN(req.body['ticket-price'][0])
           ? parseInt(req.body['ticket-price'][0])
           : 0,
       contactName: req.body['organizer-name'][0],
@@ -74,15 +66,11 @@ handler.post(async (req: any, res: NextApiResponse) => {
           _key: uuidv4(),
           eventStart:
             req.body['start-date'] && req.body['start-time']
-              ? new Date(
-                  req.body['start-date'] + ' ' + req.body['start-time']
-                ).toISOString()
+              ? new Date(req.body['start-date'] + ' ' + req.body['start-time']).toISOString()
               : '',
           eventEnd:
             req.body['end-date'] && req.body['end-time']
-              ? new Date(
-                  req.body['end-date'] + ' ' + req.body['end-time']
-                ).toISOString()
+              ? new Date(req.body['end-date'] + ' ' + req.body['end-time']).toISOString()
               : '',
         },
       ],
@@ -108,11 +96,7 @@ handler.post(async (req: any, res: NextApiResponse) => {
       .then((res) => {
         console.log('Response:', res);
         const documentId = res['_id'];
-        if (
-          req.files.image?.[0] &&
-          req.files['image'][0].size > 0 &&
-          documentId
-        ) {
+        if (req.files.image?.[0] && req.files['image'][0].size > 0 && documentId) {
           const fileStream = createReadStream(req.files.image[0].path);
           sanity.assets
             .upload('image', fileStream as any, {

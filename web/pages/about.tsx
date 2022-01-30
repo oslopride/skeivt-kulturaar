@@ -32,10 +32,7 @@ export const getStaticProps: GetStaticProps = async () => {
     "about": *[_id in ["global_about", "drafts.global_about"]] | order(_updatedAt desc) [0],
   }`;
   const res = await sanity.fetch(query);
-  const image = urlFor(res?.configuration?.header?.background)
-    .auto('format')
-    .url()
-    .toString();
+  const image = urlFor(res?.configuration?.header?.background).auto('format').url().toString();
 
   return {
     props: {
