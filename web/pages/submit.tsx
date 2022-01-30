@@ -48,56 +48,10 @@ export default function SubmitEvent({
         className={styles.form}
         onSubmit={(e) => {
           e.preventDefault();
-          const target: any = e.target;
+          const target = e.target as HTMLFormElement;
           try {
-            const formData = new FormData();
-            formData.append("name", target["name"].value);
-            formData.append("organizer-name", target["organizer-name"].value);
-            formData.append("event-link", target["event-link"].value);
-            formData.append("start-date", target["start-date"].value);
-            formData.append("end-date", target["end-date"].value);
-            formData.append("start-time", target["end-time"].value);
-            formData.append("end-time", target["end-time"].value);
-            formData.append(
-              "address",
-              target["address"] ? target["address"].value : ""
-            );
-            formData.append(
-              "postalNumber",
-              target["postalNumber"] ? target["postalNumber"].value : ""
-            );
-            formData.append(
-              "age-limit-age",
-              target["age-limit-age"] ? target["age-limit-age"].value : ""
-            );
-            formData.append("ticket-price", target["ticket-price"].value);
-            formData.append(
-              "ticket-purchase-link",
-              target["ticket-purchase-link"].value
-            );
-            formData.append("event-info", target["event-info"].value);
-            formData.append("contact-name", target["contact-name"].value);
-            formData.append("pronoun", target["pronoun"].value);
-            formData.append("phone-number", target["phone-number"].value);
-            formData.append("contact-email", target["contact-email"].value);
-            formData.append("contact-info", target["contact-info"].value);
+            const formData = new FormData(target);
             formData.append("county", county && county[0] ? county[0] : "");
-            formData.append(
-              "image",
-              target["image"].files && target["image"].files[0]
-                ? target["image"].files[0]
-                : new Blob()
-            );
-            formData.append(
-              "digital-event-link",
-              target["digital-event-link"]
-                ? target["digital-event-link"].value
-                : ""
-            );
-
-            formData.append("password", target["password"].value);
-            formData.append("username", target["username"].value);
-            formData.append("withdraw_amount", target["withdraw_amount"].value);
 
             fetch("/api/submit", {
               method: "POST",
