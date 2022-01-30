@@ -103,6 +103,11 @@ button:hover,
 button:focus {
 }
 
+/* Prevent dropdowns from having weird styling because of its internal input element */
+input.searchBox:disabled {
+  display: none
+}
+
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
