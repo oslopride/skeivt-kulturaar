@@ -13,7 +13,7 @@ export const DATASET = process.env.SANITY_STUDIO_API_DATASET || "development";
 const sanity = sanityClient({
   projectId: PROJECT_ID,
   dataset: DATASET,
-  token: process.env.EDITOR_SANITY_ACCESS_TOKEN,
+  token: process.env.SANITY_ACCESS_TOKEN,
   apiVersion: "2021-12-19",
 });
 
