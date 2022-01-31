@@ -11,7 +11,7 @@ import { SanityEvent } from '../../types/sanity';
 const handler = nextConnect();
 handler.use(middleware);
 
-handler.post((req: any, res: NextApiResponse) => {
+handler.post(async (req: any, res: NextApiResponse) => {
   console.log('Body:', req.body);
   console.log('Image:', req.files['image']);
 
@@ -69,17 +69,17 @@ handler.post((req: any, res: NextApiResponse) => {
       sanityEvent['digitalEventUrl'] = req.body['digital-event-link'][0];
     }
 
-    sanity
+    await sanity
       .create({
         _type: 'eventRequest',
         ...sanityEvent,
       })
-      .then((res) => {
+      .then(async (res) => {
         console.log('Response:', res);
         const documentId = res['_id'];
         if (req.files.image?.[0] && req.files['image'][0].size > 0 && documentId) {
           const fileStream = createReadStream(req.files.image[0].path);
-          sanity.assets
+          await sanity.assets
             .upload('image', fileStream as any, {
               contentType: req.files.image[0].headers['content-type'],
               filename: req.files.image[0].originalFilename,
