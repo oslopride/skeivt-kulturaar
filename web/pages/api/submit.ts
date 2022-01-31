@@ -21,13 +21,13 @@ handler.post((req: any, res: NextApiResponse) => {
 
   try {
     const sanityEvent: SanityEvent = {
-      eventName: req.body['name']?.[0],
-      eventDescription: req.body['event-info']?.[0],
+      eventName: req.body['name'][0],
+      eventDescription: req.body['event-info'][0],
       eventTypes: req.body['eventTypes[]'],
       eventFilters: req.body['eventFilters[]'],
-      address: req.body['address']?.[0],
-      postalCode: req.body['postalNumber']?.[0],
-      county: req.body['county']?.[0],
+      address: req.body['address'] ? req.body['address'][0] : '',
+      postalCode: req.body['postalNumber'] ? req.body['postalNumber'][0] : '',
+      county: req.body['county'] ? req.body['county'][0] : '',
       ageLimit:
         req.body['age-limit-age'] && req.body['age-limit-age'][0] !== '' && !isNaN(req.body['age-limit-age'][0])
           ? parseInt(req.body['age-limit-age'][0])
@@ -36,36 +36,36 @@ handler.post((req: any, res: NextApiResponse) => {
         req.body['ticket-price'] && req.body['ticket-price'][0] !== '' && !isNaN(req.body['ticket-price'][0])
           ? parseInt(req.body['ticket-price'][0])
           : 0,
-      eventOrganizer: req.body['organizer-name']?.[0],
-      contactName: req.body['contact-name']?.[0],
-      pronoun: req.body['pronoun']?.[0],
-      tlfNr: req.body['phone-number']?.[0],
-      contactEmail: req.body['contact-email']?.[0],
-      additionalInfo: req.body['contact-info']?.[0],
+      eventOrganizer: req.body['organizer-name'][0],
+      contactName: req.body['contact-name'][0],
+      pronoun: req.body['pronoun'][0],
+      tlfNr: req.body['phone-number'][0],
+      contactEmail: req.body['contact-email'][0],
+      additionalInfo: req.body['contact-info'][0],
       eventDates: [
         {
           _key: uuidv4(),
           eventStart:
-            req.body['start-date']?.[0] && req.body['start-time']?.[0]
+            req.body['start-date'][0] && req.body['start-time'][0]
               ? new Date(req.body['start-date'][0] + ' ' + req.body['start-time'][0]).toISOString()
               : '',
           eventEnd:
-            req.body['end-date']?.[0] && req.body['end-time']?.[0]
+            req.body['end-date'][0] && req.body['end-time'][0]
               ? new Date(req.body['end-date'][0] + ' ' + req.body['end-time'][0]).toISOString()
               : '',
         },
       ],
     };
 
-    if (req.body['ticket-purchase-link']?.[0]) {
+    if (req.body['ticket-purchase-link'][0]) {
       sanityEvent['ticketUrl'] = req.body['ticket-purchase-link'][0];
     }
 
-    if (req.body['event-link']?.[0]) {
+    if (req.body['event-link'][0]) {
       sanityEvent['eventLink'] = req.body['event-link'][0];
     }
 
-    if (req.body['digital-event-link']?.[0]) {
+    if (req.body['digital-event-link'][0]) {
       sanityEvent['digitalEventUrl'] = req.body['digital-event-link'][0];
     }
 
