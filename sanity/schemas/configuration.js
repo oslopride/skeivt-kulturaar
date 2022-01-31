@@ -32,5 +32,28 @@ export default {
         },
       ],
     },
+    {
+      title: 'CTA seksjon',
+      name: 'cta',
+      type: 'object',
+      fields: [
+        {
+          title: 'Tittel',
+          name: 'title',
+          type: 'string',
+        },
+        {
+          title: 'Tekst på knapp',
+          name: 'button',
+          type: 'string',
+        },
+        {
+          title: 'Hovedtekst',
+          description: 'Tekst i rød boks på hovedsiden',
+          name: 'text',
+          type: 'string',
+        }
+      ],
+    },
   ],
 };

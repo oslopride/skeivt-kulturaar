@@ -40,7 +40,7 @@ export default function Layout({ children, image, title, subTitle }: LayoutProps
           <header className={styles.header}>
             {image && (
               <div className={styles.imgContainer}>
-                <Image alt="" src={image} layout="fill" className={styles.backgroundImage} />
+                <Image alt="" src={image} layout="fill" className={styles.backgroundImage} priority />
               </div>
             )}
             <div className={styles.headerContent}>

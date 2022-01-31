@@ -15,7 +15,15 @@ export type EventProps = Omit<PublicSanityEvent, 'image' | 'eventDates'> & {
   eventEnd: string;
 };
 
-export default function EventList({ image, title, subTitle, events }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function EventList({
+  image,
+  title,
+  subTitle,
+  events,
+  ctaText,
+  ctaButton,
+  ctaHeader,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout image={image} title={title} subTitle={subTitle}>
       <ol className={styles.eventList}>
@@ -44,12 +52,9 @@ export default function EventList({ image, title, subTitle, events }: InferGetSt
       </ol>
 
       <section className={styles.footer}>
-        <h2>Legg til arrangement i kalenderen</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non amet ac velit velit eget. Risus est, risus ac
-          vitae eu. Amet, morbi semper eu, amet sed sit in. Maecenas imperdiet enim dignissim amet fermentum, velit at.
-        </p>
-        <Link href="/submit">Meld inn arrangement</Link>
+        <h2>{ctaHeader}</h2>
+        <p>{ctaText}</p>
+        <Link href="/submit">{ctaButton}</Link>
       </section>
     </Layout>
   );
@@ -60,6 +65,9 @@ export type EventListProps = {
   title: string | null;
   subTitle: string | null;
   events: Array<EventProps>;
+  ctaText: string;
+  ctaButton: string;
+  ctaHeader: string;
 };
 export const getStaticProps: GetStaticProps<EventListProps> = async () => {
   // be sure to strip away personal information before passing it down, we'll painstakingly and explicitly select exactly what fields
@@ -94,6 +102,9 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
     image: image || null,
     title: res?.configuration?.header?.title || null,
     subTitle: res?.configuration?.header?.subtitle || null,
+    ctaText: res?.configuration?.cta?.text || '',
+    ctaButton: res?.configuration?.cta?.button || '',
+    ctaHeader: res?.configuration?.cta?.title || '',
     events,
   };
 
