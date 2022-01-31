@@ -18,6 +18,12 @@ export default {
       type: "string",
     },
     {
+      name: "eventOrganizer",
+      title: "Event organizer",
+      description: "The organizer of the event",
+      type: "string",
+    },
+    {
       name: "eventLink",
       title: "Event link",
       description: "e.g. Facebook link for the event",

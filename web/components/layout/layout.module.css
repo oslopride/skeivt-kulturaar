@@ -1,12 +1,24 @@
 .main {
   --gutter: 16px;
-  width: 1024px;
+  width: 400px;
   max-width: calc(100% - var(--gutter) * 2);
   margin-right: auto;
   margin-left: auto;
   margin-top: 64px;
   margin-bottom: 80px;
   flex: 1 1 100%;
+}
+
+@media screen and (min-width: 890px) {
+  .main {
+    width: 890px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .main {
+    width: 1280px;
+  }
 }
 
 .container {

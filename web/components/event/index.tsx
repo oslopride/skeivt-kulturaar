@@ -12,10 +12,11 @@ export type EventProps = {
   eventName: string;
   imgUrl?: string;
   organizer: string;
-  address: string;
-  eventLink: string;
-  facebookLink?: string;
+  address?: string;
+  eventLink?: string;
   tags: Array<string>;
+  info?: string;
+  county?: string;
 };
 export function Event({
   startDate: providedStartDate,
@@ -25,8 +26,9 @@ export function Event({
   imgUrl,
   organizer,
   address,
-  facebookLink,
   tags,
+  info,
+  county,
 }: EventProps) {
   const [isOpen, setIsOpen] = useState(false);
   const startDate = new Date(providedStartDate);
@@ -36,7 +38,7 @@ export function Event({
   return (
     <div className={styles.event}>
       <div className={styles.imgContainer}>
-        <time className={styles.date}>
+        <time className={imgUrl ? styles.imgDate : styles.date}>
           {date}
           <span>{imageCoverMonth}</span>
         </time>
@@ -44,35 +46,28 @@ export function Event({
       </div>
       <div className={styles.content}>
         <span>
-          <time>{startDate.toLocaleDateString()}</time>
+          <time>{startDate.toLocaleString()}</time>
           {' - '}
-          <time>{endDate.toLocaleDateString()}</time>
+          <time>{endDate.toLocaleString()}</time>
         </span>
         <h3>{eventName}</h3>
-        <p>
-          {organizer} -{' '}
-          <a href="https://google.com" target={`_gm_${eventName || 'blank'}`} rel="noreferrer">
-            Google maps link
-          </a>
-        </p>
+        <p>{address && `${address}, ${county}`}</p>
         <ul className={styles.tagList}>
-          <li className={styles.tagList__item}>Tag</li>
-          <li className={styles.tagList__item}>Tag</li>
-          <li className={styles.tagList__item}>Tag</li>
-          <li className={styles.tagList__item}>Tag</li>
+          {tags.map((tag) => (
+            <li key={tag} className={styles.tagList__item}>
+              {tag}
+            </li>
+          ))}
         </ul>
-        <a
-          href="https://facebook.com"
-          className={styles.eventLink}
-          target={`_fb_${eventName || 'blank'}`}
-          rel="noreferrer"
-        >
-          Facebook link
-        </a>
+        {eventLink && (
+          <a href={eventLink} className={styles.eventLink} target={`_${eventName || 'blank'}`} rel="noreferrer">
+            Gå til arrangement
+          </a>
+        )}
         <Disclosure open={isOpen} onChange={() => setIsOpen((prev) => !prev)}>
-          <DisclosurePanel>Event information</DisclosurePanel>
+          <DisclosurePanel className={styles.info}>{info}</DisclosurePanel>
           <DisclosureButton className={styles.readMore}>
-            {isOpen ? 'Les mindre' : 'Les mer om arrangementet'}
+            {isOpen ? 'Les mindre' : 'Les mer om arrangementet +'}
           </DisclosureButton>
         </Disclosure>
       </div>

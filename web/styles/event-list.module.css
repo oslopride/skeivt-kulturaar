@@ -5,6 +5,11 @@
   margin-top: 100px;
 }
 
+.eventList li {
+  display: flex;
+  flex-direction: column;
+}
+
 .footer {
   margin-top: 48px;
   background-color: var(--color-red);
@@ -12,7 +17,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 56px 140px;
+  padding: 56px 34px;
+}
+
+@media screen and (min-width: 890px) {
+  .footer {
+    padding: 56px 80px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .footer {
+    padding: 56px 140px;
+  }
 }
 
 .footer a {

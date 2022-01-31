@@ -6,6 +6,7 @@ export type SanityEvent = {
   eventLink?: string;
   eventTypes: string[];
   eventFilters: string[];
+  eventOrganizer: string;
   address: string;
   postalCode: string;
   county: string;
@@ -22,6 +23,9 @@ export type SanityEvent = {
   image?: SanityImageAssetDocument;
 };
 
-export type PublicSanityEvent = Omit<SanityEvent, 'tlfNr' | 'pronoun' | 'contactEmail' | 'contactName'> & {
+export type PublicSanityEvent = Omit<
+  SanityEvent,
+  'tlfNr' | 'pronoun' | 'contactEmail' | 'contactName' | 'additionalInfo'
+> & {
   _id: string;
 };

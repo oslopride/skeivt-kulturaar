@@ -6,25 +6,33 @@
   position: relative;
 }
 
-.date {
+.imgDate, .date {
   position: absolute;
   top: 16px;
   left: 16px;
   display: flex;
   width: 80px;
   height: 80px;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
   font-weight: bold;
+  align-self: center;
   font-size: 32px;
   line-height: 36px;
   text-align: center;
   background-color: var(--color-blue);
   color: var(--color-foreground);
+  z-index: 2;
 }
 
-.date span {
+.date {
+  position: relative;
+  top: unset;
+  left: unset;
+  background-color: transparent;
+}
+
+.imgDate span, .date span {
   font-size: 14px;
   line-height: 22px;
   letter-spacing: 2px;
@@ -38,6 +46,7 @@
 }
 
 .content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   padding: 24px;
@@ -64,10 +73,13 @@
 .content p {
   font-size: 14px;
   line-height: 24px;
-  margin: 4px 0 15px;
+  margin: 0;
 }
 
 .imgContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 400px;
   height: 265px;
@@ -77,6 +89,7 @@
 .content a:link,
 .content a:visited {
   margin-right: auto;
+  font-weight: 500;
 }
 
 .eventLink:link, .eventLink:visited {
@@ -92,10 +105,14 @@
   margin-bottom: 15px;
 }
 
+.info {
+  margin: 5px 0 16px 0;
+}
+
 .tagList {
   display: flex;
   flex-wrap: wrap;
-  margin: 16px 0;
+  margin: 10px 0;
   gap: 8px;
   padding: 0;
 }

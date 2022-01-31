@@ -16,25 +16,31 @@ export type EventProps = Omit<PublicSanityEvent, 'image' | 'eventDates'> & {
 };
 
 export default function EventList({ image, title, subTitle, events }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log(events);
   return (
     <Layout image={image} title={title} subTitle={subTitle}>
       <ol className={styles.eventList}>
-        {events.map((event) => (
-          <li key={event._id}>
-            <Event
-              startDate={event.eventStart}
-              endDate={event.eventEnd}
-              address=""
-              eventLink=""
-              eventName={event.eventName}
-              organizer=""
-              tags={[]}
-              facebookLink=""
-              imgUrl=""
-            />
-          </li>
-        ))}
+        {events.map((event) => {
+          const tags = [
+            ...event.eventFilters.filter((filter) => filter),
+            ...event.eventTypes.filter((eventType) => eventType),
+          ];
+          return (
+            <li key={event._id}>
+              <Event
+                startDate={event.eventStart}
+                endDate={event.eventEnd}
+                address={event.address}
+                eventLink={event.eventLink || event.digitalEventUrl}
+                eventName={event.eventName}
+                organizer={event.eventOrganizer}
+                tags={tags}
+                imgUrl={event.image}
+                info={event.eventDescription}
+                county={event.county}
+              />
+            </li>
+          );
+        })}
       </ol>
 
       <section className={styles.footer}>
@@ -59,7 +65,7 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
   // be sure to strip away personal information before passing it down, we'll painstakingly and explicitly select exactly what fields
   // we want from the query (:
   const fields =
-    '_id,additionalInfo,address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,image,postalCode,ticketPrice,ticketUrl';
+    '_id,address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,image,postalCode,ticketPrice,ticketUrl';
   const query = `{
     "configuration": *[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0],
     "events": *[_type == 'eventRequest' && approved == true]{${fields}},
