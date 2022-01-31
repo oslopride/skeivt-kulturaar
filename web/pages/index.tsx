@@ -8,14 +8,33 @@ import { Event } from '../components/event';
 import Layout from '../components/layout';
 import { PublicSanityEvent } from '../types/sanity';
 
+export type EventProps = Omit<PublicSanityEvent, 'image' | 'eventDates'> & {
+  _id: string;
+  image?: string;
+  eventStart: string;
+  eventEnd: string;
+};
+
 export default function EventList({ image, title, subTitle, events }: InferGetStaticPropsType<typeof getStaticProps>) {
   console.log(events);
   return (
     <Layout image={image} title={title} subTitle={subTitle}>
       <ol className={styles.eventList}>
-        <li>
-          <Event date="" address="" eventLink="" eventName="" organizer="" tags={[]} facebookLink="" imgUrl="" />
-        </li>
+        {events.map((event) => (
+          <li key={event._id}>
+            <Event
+              startDate={event.eventStart}
+              endDate={event.eventEnd}
+              address=""
+              eventLink=""
+              eventName={event.eventName}
+              organizer=""
+              tags={[]}
+              facebookLink=""
+              imgUrl=""
+            />
+          </li>
+        ))}
       </ol>
 
       <section className={styles.footer}>
@@ -34,7 +53,7 @@ export type EventListProps = {
   image: string | null;
   title: string | null;
   subTitle: string | null;
-  events: Array<PublicSanityEvent>;
+  events: Array<EventProps>;
 };
 export const getStaticProps: GetStaticProps<EventListProps> = async () => {
   // be sure to strip away personal information before passing it down, we'll painstakingly and explicitly select exactly what fields
@@ -47,11 +66,29 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
   }`;
   const res = await sanity.fetch(query);
   const image = urlFor(res?.configuration?.header?.background).auto('format').url().toString();
+
+  // Do as much as we can to massage the data here instead of client-side
+  const sanityEvents: Array<PublicSanityEvent> = res?.events || [];
+  const events: Array<EventProps> = [];
+  for (const event of sanityEvents) {
+    // for each date of an event, create a new event
+    for (const { eventEnd, eventStart } of event.eventDates || []) {
+      const image = event.image ? urlFor(event.image).size(400, 250).auto('format').url().toString() : undefined;
+      const { eventDates, ...oldEvent } = event;
+      const newEvent: EventProps = {
+        ...oldEvent,
+        image,
+        eventStart,
+        eventEnd,
+      };
+      events.push(newEvent);
+    }
+  }
   const props: EventListProps = {
     image: image || null,
     title: res?.configuration?.header?.title || null,
     subTitle: res?.configuration?.header?.subtitle || null,
-    events: res?.events || [],
+    events,
   };
 
   return {

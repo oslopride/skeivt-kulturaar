@@ -4,8 +4,11 @@ import styles from './event.module.css';
 import { useState } from 'react';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@reach/disclosure';
 
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+
 export type EventProps = {
-  date: string;
+  startDate: string;
+  endDate: string;
   eventName: string;
   imgUrl?: string;
   organizer: string;
@@ -14,21 +17,40 @@ export type EventProps = {
   facebookLink?: string;
   tags: Array<string>;
 };
-export function Event({ date, eventLink, eventName, imgUrl, organizer, address, facebookLink, tags }: EventProps) {
+export function Event({
+  startDate: providedStartDate,
+  endDate: providedEndDate,
+  eventLink,
+  eventName,
+  imgUrl,
+  organizer,
+  address,
+  facebookLink,
+  tags,
+}: EventProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const startDate = new Date(providedStartDate);
+  const endDate = new Date(providedEndDate);
+  const imageCoverMonth = MONTHS[startDate.getMonth()];
+  const date = startDate.getDate();
   return (
     <div className={styles.event}>
       <div className={styles.imgContainer}>
         <time className={styles.date}>
-          21<span>nov</span>
+          {date}
+          <span>{imageCoverMonth}</span>
         </time>
         {imgUrl && <Image className={styles.img} src={imgUrl} alt={`Event ${''}`} layout="fill" />}
       </div>
       <div className={styles.content}>
-        <time>time</time>
-        <h3>Event name</h3>
+        <span>
+          <time>{startDate.toLocaleDateString()}</time>
+          {' - '}
+          <time>{endDate.toLocaleDateString()}</time>
+        </span>
+        <h3>{eventName}</h3>
         <p>
-          Arrangør -{' '}
+          {organizer} -{' '}
           <a href="https://google.com" target={`_gm_${eventName || 'blank'}`} rel="noreferrer">
             Google maps link
           </a>
