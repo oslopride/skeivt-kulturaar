@@ -382,6 +382,6 @@ export const getStaticProps: GetStaticProps = async () => {
       title: res?.header?.title || null,
       subTitle: res?.header?.subtitle || null,
     },
-    revalidate: 3600,
+    revalidate: 60,
   };
 };

@@ -1,7 +1,7 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import BlockContent from '@sanity/block-content-to-react';
 
-import sanity, { urlFor } from '../sanity';
+import sanity, { DATASET, PROJECT_ID, urlFor } from '../sanity';
 import Layout from '../components/layout';
 
 export default function About({
@@ -14,7 +14,7 @@ export default function About({
   return (
     <Layout title={title} subTitle={subTitle} image={image}>
       <h2>{aboutTitle}</h2>
-      <BlockContent blocks={aboutBody} />
+      <BlockContent blocks={aboutBody} projectId={PROJECT_ID} dataset={DATASET} />
     </Layout>
   );
 }
@@ -42,6 +42,6 @@ export const getStaticProps: GetStaticProps = async () => {
       title: res?.configuration?.header?.title || null,
       subTitle: res?.configuration?.header?.subtitle || null,
     },
-    revalidate: 3600,
+    revalidate: 60,
   };
 };
