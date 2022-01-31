@@ -57,15 +57,15 @@ handler.post((req: any, res: NextApiResponse) => {
       ],
     };
 
-    if (req.body['ticket-purchase-link'][0]) {
+    if (req.body['ticket-purchase-link'][0] !== '') {
       sanityEvent['ticketUrl'] = req.body['ticket-purchase-link'][0];
     }
 
-    if (req.body['event-link'][0]) {
+    if (req.body['event-link'][0] !== '') {
       sanityEvent['eventLink'] = req.body['event-link'][0];
     }
 
-    if (req.body['digital-event-link'][0]) {
+    if (req.body['digital-event-link'] && req.body['event-link'][0] !== '') {
       sanityEvent['digitalEventUrl'] = req.body['digital-event-link'][0];
     }
 
