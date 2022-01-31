@@ -11,7 +11,7 @@ import { SanityEvent } from '../../types/sanity';
 const handler = nextConnect();
 handler.use(middleware);
 
-handler.post(async (req: any, res: NextApiResponse) => {
+handler.post((req: any, res: NextApiResponse) => {
   console.log('Body:', req.body);
   console.log('Image:', req.files['image']);
 
@@ -105,6 +105,8 @@ handler.post(async (req: any, res: NextApiResponse) => {
   } catch (err) {
     console.log('Error:', err);
     res.status(500).send({ error: 'failed to fetch data' });
+  } finally {
+    return;
   }
 });
 
