@@ -5,3 +5,6 @@ node_modules
 
 # Yarn specific
 yarn-error.log
+
+# Build files
+sanity/dist
