@@ -101,7 +101,7 @@ handler.post(async (req: any, res: NextApiResponse) => {
     console.log('Error:', err);
     res.status(500).send({ error: 'failed to fetch data' });
   }
-  res.status(201).end();
+  res.status(201).json({});
 });
 
 export const config = {
