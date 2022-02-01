@@ -69,45 +69,39 @@ handler.post(async (req: any, res: NextApiResponse) => {
       sanityEvent['digitalEventUrl'] = req.body['digital-event-link'][0];
     }
 
-    await sanity
-      .create({
-        _type: 'eventRequest',
-        ...sanityEvent,
-      })
-      .then(async (res) => {
-        console.log('Response:', res);
-        const documentId = res['_id'];
-        if (req.files.image?.[0] && req.files['image'][0].size > 0 && documentId) {
-          const fileStream = createReadStream(req.files.image[0].path);
-          await sanity.assets
-            .upload('image', fileStream as any, {
-              contentType: req.files.image[0].headers['content-type'],
-              filename: req.files.image[0].originalFilename,
-            })
-            .then((imgAsset) => {
-              console.log('The image was uploaded!', imgAsset);
-              return sanity
-                .patch(documentId)
-                .set({
-                  image: {
-                    _type: 'image',
-                    asset: {
-                      _type: 'reference',
-                      _ref: imgAsset._id,
-                    },
-                  },
-                })
-                .commit();
-            });
-        }
+    const eventDocument = await sanity.create({
+      _type: 'eventRequest',
+      ...sanityEvent,
+    });
+
+    console.log('Response:', eventDocument);
+    const documentId = eventDocument['_id'];
+    if (req.files.image && req.files.image[0] && req.files['image'][0].size > 0 && documentId) {
+      const fileStream = createReadStream(req.files.image[0].path);
+      const imgAsset = await sanity.assets.upload('image', fileStream as any, {
+        contentType: req.files.image[0].headers['content-type'],
+        filename: req.files.image[0].originalFilename,
       });
-    res.status(201).end();
+
+      console.log('The image was uploaded!', imgAsset);
+      await sanity
+        .patch(documentId)
+        .set({
+          image: {
+            _type: 'image',
+            asset: {
+              _type: 'reference',
+              _ref: imgAsset._id,
+            },
+          },
+        })
+        .commit();
+    }
   } catch (err) {
     console.log('Error:', err);
     res.status(500).send({ error: 'failed to fetch data' });
-  } finally {
-    return;
   }
+  res.status(201).end();
 });
 
 export const config = {
