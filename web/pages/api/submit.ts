@@ -20,65 +20,65 @@ handler.post(async (req: any, res: NextApiResponse) => {
   console.log('Body:', req.body);
   console.log('Image:', req.files['image']);
 
-  if (req.body['password'][0] !== '' || req.body['username'][0] !== '' || req.body['withdraw_amount'][0] !== '') {
+  if (req.body['password'] !== '' || req.body['username'] !== '' || req.body['withdraw_amount'] !== '') {
     res.status(403).end();
   }
 
   try {
     const sanityEvent: SanityEvent = {
-      eventName: req.body['name'][0],
-      eventDescription: req.body['event-info'][0],
-      eventTypes: req.body['eventTypes[]'],
-      eventFilters: req.body['eventFilters[]'],
-      address: req.body['address'] ? req.body['address'][0] : '',
-      postalCode: req.body['postalNumber'] ? req.body['postalNumber'][0] : '',
-      county: req.body['county'] ? req.body['county'][0] : '',
+      eventName: req.body['name'],
+      eventDescription: req.body['event-info'],
+      eventTypes: req.body['eventTypes'],
+      eventFilters: req.body['eventFilters'],
+      address: req.body['address'] ? req.body['address'] : '',
+      postalCode: req.body['postalNumber'] ? req.body['postalNumber'] : '',
+      county: req.body['county'] ? req.body['county'] : '',
       ageLimit:
-        req.body['age-limit-age'] && req.body['age-limit-age'][0] !== '' && !isNaN(req.body['age-limit-age'][0])
-          ? parseInt(req.body['age-limit-age'][0])
+        req.body['age-limit-age'] && req.body['age-limit-age'] !== '' && !isNaN(req.body['age-limit-age'])
+          ? parseInt(req.body['age-limit-age'])
           : 0,
       ticketPrice:
-        req.body['ticket-price'] && req.body['ticket-price'][0] !== '' && !isNaN(req.body['ticket-price'][0])
-          ? parseInt(req.body['ticket-price'][0])
+        req.body['ticket-price'] && req.body['ticket-price'] !== '' && !isNaN(req.body['ticket-price'])
+          ? parseInt(req.body['ticket-price'])
           : 0,
-      eventOrganizer: req.body['organizer-name'][0],
-      contactName: req.body['contact-name'][0],
-      pronoun: req.body['pronoun'][0],
-      tlfNr: req.body['phone-number'][0],
-      contactEmail: req.body['contact-email'][0],
-      additionalInfo: req.body['contact-info'][0],
+      eventOrganizer: req.body['organizer-name'],
+      contactName: req.body['contact-name'],
+      pronoun: req.body['pronoun'],
+      tlfNr: req.body['phone-number'],
+      contactEmail: req.body['contact-email'],
+      additionalInfo: req.body['contact-info'],
       eventDates: [
         {
           _key: uuidv4(),
           eventStart:
-            req.body['start-date'][0] && req.body['start-time'][0]
-              ? new Date(req.body['start-date'][0] + ' ' + req.body['start-time'][0]).toISOString()
+            req.body['start-date'] && req.body['start-time']
+              ? new Date(req.body['start-date'] + ' ' + req.body['start-time']).toISOString()
               : '',
           eventEnd:
-            req.body['end-date'][0] && req.body['end-time'][0]
-              ? new Date(req.body['end-date'][0] + ' ' + req.body['end-time'][0]).toISOString()
+            req.body['end-date'] && req.body['end-time']
+              ? new Date(req.body['end-date'] + ' ' + req.body['end-time']).toISOString()
               : '',
         },
       ],
     };
 
-    if (req.body['ticket-purchase-link'][0] !== '') {
-      sanityEvent['ticketUrl'] = req.body['ticket-purchase-link'][0];
+    if (req.body['ticket-purchase-link'] !== '') {
+      sanityEvent['ticketUrl'] = req.body['ticket-purchase-link'];
     }
 
-    if (req.body['event-link'][0] !== '') {
-      sanityEvent['eventLink'] = req.body['event-link'][0];
+    if (req.body['event-link'] !== '') {
+      sanityEvent['eventLink'] = req.body['event-link'];
     }
 
-    if (req.body['digital-event-link'] && req.body['event-link'][0] !== '') {
-      sanityEvent['digitalEventUrl'] = req.body['digital-event-link'][0];
+    if (req.body['digital-event-link'] && req.body['event-link'] !== '') {
+      sanityEvent['digitalEventUrl'] = req.body['digital-event-link'];
     }
 
-    if (req.files.image && req.files.image[0] && req.files['image'][0].size > 0) {
-      const file = readFileSync(req.files.image[0].path);
+    if (req.files.image && req.files.image && req.files['image'].size > 0) {
+      const file = readFileSync(req.files.image.filepath);
       const imgAsset = await sanity.assets
         .upload('image', file, {
-          filename: req.files.image[0].originalFilename,
+          filename: req.files.image.originalFilename,
         })
         .catch((err) => {
           console.log('Error:', err);
@@ -99,7 +99,8 @@ handler.post(async (req: any, res: NextApiResponse) => {
       _type: 'eventRequest',
       ...sanityEvent,
     });
-    res.status(201).json({});
+
+    res.status(201).end();
   } catch (err) {
     console.log('Error:', err);
     res.status(500).send({ error: 'failed to fetch data' });
