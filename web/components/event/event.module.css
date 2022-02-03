@@ -107,6 +107,7 @@
 
 .info {
   margin: 5px 0 16px 0;
+  white-space: pre-wrap;
 }
 
 .tagList {

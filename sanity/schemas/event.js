@@ -15,7 +15,7 @@ export default {
       name: "eventDescription",
       title: "Event description",
       description: "The description of the event",
-      type: "string",
+      type: "text",
     },
     {
       name: "eventOrganizer",
