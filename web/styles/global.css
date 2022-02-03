@@ -3,17 +3,17 @@
  * quick baseline!
  */
 :root {
-  --color-purple: #BE69FF;
-  --color-dark-purple: #8142B0;
-  --color-blue: #82C8F5;
-  --color-green: #3CD28C;
-  --color-yellow: #FFD250;
-  --color-red: #FF695F;
-  --color-black: #1E1E1E;
-  --color-grey: #5B5B5B;
-  --color-beige: #EDEDE5;
-  --color-light-beige: #F6F6F0;
-  --color-cream: #FFFFF5;
+  --color-purple: #be69ff;
+  --color-dark-purple: #8142b0;
+  --color-blue: #82c8f5;
+  --color-green: #3cd28c;
+  --color-yellow: #ffd250;
+  --color-red: #ff695f;
+  --color-black: #1e1e1e;
+  --color-grey: #5b5b5b;
+  --color-beige: #edede5;
+  --color-light-beige: #f6f6f0;
+  --color-cream: #fffff5;
   --color-foreground: var(--color-black);
   --color-foreground-light: var(--color-cream);
   --color-background: var(--color-cream);
@@ -25,7 +25,9 @@ html {
   box-sizing: border-box;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin: 0;
 }
 
@@ -61,7 +63,8 @@ body {
 
 body,
 input,
-textarea, .mantine-NativeSelect-input {
+textarea,
+.mantine-NativeSelect-input {
   font-family: var(--font-body);
 }
 
@@ -105,17 +108,17 @@ button:focus {
 
 /* Prevent dropdowns from having weird styling because of its internal input element */
 input.searchBox:disabled {
-  display: none
+  display: none;
 }
 
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
-  width: 36px;
+  display: none;
+  width: 32px;
   height: 30px;
   right: 36px;
-  top: 36px;
-  display: none;
+  top: 56px;
 }
 
 @media screen and (max-width: 1064px) {
@@ -127,6 +130,7 @@ input.searchBox:disabled {
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
   background: var(--color-cream);
+  height: 4px !important;
 }
 
 /* Color/shape of burger icon bars on hover*/
