@@ -50,9 +50,13 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(false);
 
+  const [preview, setPreview] = useState<string>();
   const { getRootProps, getInputProps } = useDropzone({
     maxSize: 5000000,
     accept: '.jpg,.png,.jpeg',
+    onDrop: (acceptedFiles) => {
+      setPreview(URL.createObjectURL(acceptedFiles[0]));
+    },
   });
 
   return (
@@ -291,9 +295,12 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
                 <label htmlFor="image">Last opp bilde</label>
                 <div>
                   <div className={styles.dropzone} {...getRootProps()}>
+                    {preview && <img src={preview} alt="Image upload preview" />}
                     <input type="file" {...getInputProps({ name: 'image' })} />
-                    <p>+</p>
-                    <p>Trykk eller drag &apos;n drop filer her...</p>
+                    <div className={styles.dropzoneText}>
+                      <p>+</p>
+                      <p>Trykk eller drag &apos;n drop filer her...</p>
+                    </div>
                   </div>
                   <div className={styles.dropzone__info}>
                     Krav for at bildet skal bli godkjent:

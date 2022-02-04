@@ -106,6 +106,16 @@
 .dropzone {
   border: 1px dashed var(--color-foreground);
   padding: 1em;
+  display: flex;
+  cursor: pointer;
+}
+
+.dropzone img {
+  max-width: 200px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+  object-fit: cover;
 }
 
 .dropzone__info ul {
@@ -115,14 +125,23 @@
   font-weight: 400;
 }
 
-.dropzone p:first-of-type {
-  font-size: 2em;
-  margin-bottom: 1em;
+.dropzoneText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  flex: 1;
 }
 
-.dropzone p {
+.dropzoneText p:first-of-type {
+  font-size: 2em;
+}
+
+.dropzoneText p {
   text-align: center;
   font-weight: 500;
+  margin: 0;
 }
 
 .form textarea {
