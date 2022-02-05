@@ -7,6 +7,7 @@ import styles from '../styles/event-list.module.css';
 import { Event } from '../components/event';
 import Layout from '../components/layout';
 import { PublicSanityEvent } from '../types/sanity';
+import SEO from '../components/seo';
 
 export type EventProps = Omit<PublicSanityEvent, 'image' | 'eventDates'> & {
   _id: string;
@@ -23,9 +24,13 @@ export default function EventList({
   ctaText,
   ctaButton,
   ctaHeader,
+  metaImage,
+  metaTitle,
+  metaDescription,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout image={image} title={title} subTitle={subTitle}>
+      <SEO image={metaImage} title={metaTitle} description={metaDescription} />
       <ol className={styles.eventList}>
         {events.map((event) => {
           const tags = [
@@ -68,6 +73,9 @@ export type EventListProps = {
   ctaText: string;
   ctaButton: string;
   ctaHeader: string;
+  metaTitle: string;
+  metaDescription: string;
+  metaImage: string;
 };
 export const getStaticProps: GetStaticProps<EventListProps> = async () => {
   // be sure to strip away personal information before passing it down, we'll painstakingly and explicitly select exactly what fields
@@ -80,6 +88,7 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
   }`;
   const res = await sanity.fetch(query);
   const image = urlFor(res?.configuration?.header?.background).auto('format').url().toString();
+  const metaImage = urlFor(res?.configuration?.header?.background).size(1200, 630).auto('format').url().toString();
 
   // Do as much as we can to massage the data here instead of client-side
   const sanityEvents: Array<PublicSanityEvent> = res?.events || [];
@@ -105,6 +114,9 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
     ctaText: res?.configuration?.cta?.text || '',
     ctaButton: res?.configuration?.cta?.button || '',
     ctaHeader: res?.configuration?.cta?.title || '',
+    metaTitle: res?.configuration?.meta?.title || '',
+    metaDescription: res?.configuration?.meta?.description || '',
+    metaImage,
     events,
   };
 

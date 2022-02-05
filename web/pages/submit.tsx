@@ -11,6 +11,7 @@ import sanity, { urlFor } from '../sanity';
 
 import styles from '../styles/form.module.css';
 import Thanks from '../components/thanks';
+import SEO from '../components/seo';
 
 const COUNTIES = [
   'Oslo',
@@ -40,7 +41,14 @@ const EVENT_TYPES = [
 
 const EVENT_FILTERS = ['Universelt utformet', 'Tegnespråktolk', 'WC', 'Rusfritt'];
 
-export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function SubmitEvent({
+  image,
+  title,
+  subTitle,
+  metaImage,
+  metaTitle,
+  metaDescription,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const [ageLimit, setAgelimit] = useState(false);
   const [isPhysical, setIsPhysical] = useState(true);
   const [isDigital, setIsDigital] = useState(false);
@@ -61,6 +69,7 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
 
   return (
     <Layout image={image} title={title} subTitle={subTitle}>
+      <SEO image={metaImage} title={metaTitle} description={metaDescription} />
       {submitted ? (
         <Thanks />
       ) : (
@@ -373,17 +382,25 @@ export type Data = {
   image?: string | null;
   title?: string | null;
   subTitle?: string | null;
+  metaTitle: string;
+  metaDescription: string;
+  metaImage: string;
 };
 export const getStaticProps: GetStaticProps = async () => {
   const res = await sanity.fetch(
     `*[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0]`
   );
   const image = urlFor(res?.header?.background).auto('format').url().toString();
+  const metaImage = urlFor(res?.header?.background).size(1200, 630).auto('format').url().toString();
+
   return {
     props: {
       image: image || null,
       title: res?.header?.title || null,
       subTitle: res?.header?.subtitle || null,
+      metaTitle: res?.meta?.title || '',
+      metaDescription: res?.meta?.description || '',
+      metaImage,
     },
     revalidate: 60,
   };
