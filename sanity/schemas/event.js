@@ -63,7 +63,6 @@ export default {
     { name: "digitalEventUrl", title: "Digital event URL", type: "url" },
     { name: "ageLimit", title: "Age limit", type: "number" },
     { name: "ticketPrice", title: "Ticket price", type: "number" },
-    { name: "ticketUrl", title: "Ticket URL", type: "url" },
     {
       name: "contactName",
       title: "Contact person's first name",

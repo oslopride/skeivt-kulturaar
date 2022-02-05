@@ -11,7 +11,6 @@ export type SanityEvent = {
   digitalEventUrl?: string;
   ageLimit: number;
   ticketPrice: number;
-  ticketUrl?: string;
   contactName: string;
   pronoun: string;
   tlfNr: string;

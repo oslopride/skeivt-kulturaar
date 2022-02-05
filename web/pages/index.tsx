@@ -73,7 +73,7 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
   // be sure to strip away personal information before passing it down, we'll painstakingly and explicitly select exactly what fields
   // we want from the query (:
   const fields =
-    '_id,address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,image,postalCode,ticketPrice,ticketUrl';
+    '_id,address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,image,postalCode,ticketPrice';
   const query = `{
     "configuration": *[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0],
     "events": *[_type == 'eventRequest' && approved == true]{${fields}},

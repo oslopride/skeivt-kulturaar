@@ -285,10 +285,6 @@ export default function SubmitEvent({ image, title, subTitle }: InferGetStaticPr
                   <label htmlFor="ticket-free">Gratis</label>
                 </div>
                 <div>
-                  <label htmlFor="ticket-purchase-link">Eventuell lenke til billettkjøp:</label>
-                  <input name="ticket-purchase-link" placeholder="URL" className={styles.input} />
-                </div>
-                <div>
                   <label htmlFor="event-info">Om arrangementet</label>
                   <textarea name="event-info" placeholder="Om arrangementet" className={styles.input} />
                 </div>
