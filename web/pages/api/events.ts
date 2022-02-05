@@ -25,11 +25,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   await runMiddleware(req, res, cors);
 
   const fields =
-    '_id,address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,image,postalCode,ticketPrice';
+    'address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,image,postalCode,ticketPrice';
   const query = `*[_type == 'eventRequest' && approved == true]{${fields}}`;
   const events: Array<PublicSanityEvent> = await sanity.fetch(query);
   const eventsWithImageUrls = events.map((event) => {
-    const { image, _id, ...rest } = event;
+    const { image, ...rest } = event;
     const thumbnail = image ? urlFor(image).width(400).url().toString() : null;
     const full = image ? urlFor(image).url().toString() : null;
     const images = { thumbnail, full };
