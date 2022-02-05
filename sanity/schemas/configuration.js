@@ -55,5 +55,22 @@ export default {
         }
       ],
     },
+    {
+      title: 'SEO meta tags',
+      name: 'meta',
+      type: 'object',
+      fields: [
+        {
+          title: 'Tittel',
+          name: 'title',
+          type: 'string',
+        },
+        {
+          title: 'Beskrivelse',
+          name: 'description',
+          type: 'string',
+        },
+      ],
+    },
   ],
 };
