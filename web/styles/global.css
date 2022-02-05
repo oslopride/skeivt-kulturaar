@@ -17,7 +17,7 @@
   --color-foreground: var(--color-black);
   --color-foreground-light: var(--color-cream);
   --color-background: var(--color-cream);
-  --font-body: proxima-nova, -apple-system, 'Segoe UI', Helvetica Neue, Helvetica, Roboto, Arial, sans-serif, system-ui,
+  --font-body: roc-grotesk, -apple-system, 'Segoe UI', Helvetica Neue, Helvetica, Roboto, Arial, sans-serif, system-ui,
     'Apple Color Emoji', 'Segoe UI Emoji';
 }
 
@@ -64,7 +64,7 @@ body {
 body,
 input,
 textarea,
-.mantine-NativeSelect-input {
+.mantine-NativeSelect-input, button {
   font-family: var(--font-body);
 }
 

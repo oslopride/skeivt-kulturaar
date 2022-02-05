@@ -51,6 +51,7 @@
   text-align: center;
 } 
 
-.foter p {
+.footer p {
   text-align: center;
+  line-height: 24px;
 }
