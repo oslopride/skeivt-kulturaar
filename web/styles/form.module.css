@@ -5,10 +5,8 @@
 
 .form fieldset {
   border: none;
-}
-
-.form fieldset {
-  margin-top: 64px;
+  margin: 64px 0 0 0;
+  padding: 0;
 }
 
 .form small {
