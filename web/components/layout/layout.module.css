@@ -29,6 +29,10 @@
   }
 }
 
+.main > h2, .main > p {
+  align-self: flex-start;
+}
+
 .container {
   z-index: 1;
 }

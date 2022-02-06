@@ -48,6 +48,8 @@ export default function SubmitEvent({
   metaImage,
   metaTitle,
   metaDescription,
+  header,
+  headerDescription,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [ageLimit, setAgelimit] = useState(false);
   const [isPhysical, setIsPhysical] = useState(true);
@@ -74,8 +76,6 @@ export default function SubmitEvent({
         <Thanks />
       ) : (
         <>
-          <h2>Meld inn ditt arrangement</h2>
-          <p>Kort informasjon om kalenderen her</p>
           <form
             className={styles.form}
             onSubmit={(e) => {
@@ -109,6 +109,8 @@ export default function SubmitEvent({
               }
             }}
           >
+            <h2>{header}</h2>
+            <p>{headerDescription}</p>
             <fieldset>
               <h3>
                 <figure>
@@ -385,6 +387,8 @@ export type Data = {
   metaTitle: string;
   metaDescription: string;
   metaImage: string;
+  header: string;
+  headerDescription: string;
 };
 export const getStaticProps: GetStaticProps = async () => {
   const res = await sanity.fetch(
@@ -401,6 +405,8 @@ export const getStaticProps: GetStaticProps = async () => {
       metaTitle: res?.meta?.title || '',
       metaDescription: res?.meta?.description || '',
       metaImage,
+      header: res?.form?.title || 'Meld inn ditt arrangement',
+      headerDescription: res?.form?.description || '',
     },
     revalidate: 60,
   };

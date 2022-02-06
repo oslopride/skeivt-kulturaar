@@ -72,5 +72,24 @@ export default {
         },
       ],
     },
+    {
+      title: 'Innsendelseform',
+      name: 'form',
+      type: 'object',
+      fields: [
+        {
+          title: 'Tittel',
+          name: 'title',
+          type: 'string',
+          description: 'Tittel på tekst over formen'
+        },
+        {
+          title: 'Beskrivelse',
+          name: 'description',
+          type: 'text',
+          description: 'Innledende informasjonstekst over formen'
+        },
+      ],
+    },
   ],
 };
