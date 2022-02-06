@@ -11,7 +11,7 @@ import SEO from '../components/seo';
 
 export type EventProps = Omit<PublicSanityEvent, 'image' | 'eventDates'> & {
   _id: string;
-  image?: string;
+  image: string | null;
   eventStart: string;
   eventEnd: string;
 };
@@ -44,12 +44,15 @@ export default function EventList({
                 endDate={event.eventEnd}
                 address={event.address}
                 eventLink={event.eventLink || event.digitalEventUrl}
+                digitalLink={event.digitalEventUrl}
                 eventName={event.eventName}
                 organizer={event.eventOrganizer}
                 tags={tags}
                 imgUrl={event.image}
                 info={event.eventDescription}
                 county={event.county}
+                ageLimit={event.ageLimit}
+                ticketPrice={event.ticketPrice}
               />
             </li>
           );
@@ -81,7 +84,7 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
   // be sure to strip away personal information before passing it down, we'll painstakingly and explicitly select exactly what fields
   // we want from the query (:
   const fields =
-    '_id,address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,image,postalCode,ticketPrice';
+    '_id,address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,eventOrganizer,image,postalCode,ticketPrice';
   const query = `{
     "configuration": *[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0],
     "events": *[_type == 'eventRequest' && approved == true]{${fields}},
@@ -96,7 +99,7 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
   for (const event of sanityEvents) {
     // for each date of an event, create a new event
     for (const { eventEnd, eventStart } of event.eventDates || []) {
-      const image = event.image ? urlFor(event.image).size(400, 250).auto('format').url().toString() : undefined;
+      const image = event.image ? urlFor(event.image).size(400, 250).auto('format').url().toString() : null;
       const { eventDates, ...oldEvent } = event;
       const newEvent: EventProps = {
         ...oldEvent,

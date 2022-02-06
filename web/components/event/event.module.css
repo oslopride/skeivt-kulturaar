@@ -17,8 +17,8 @@
   top: 16px;
   left: 16px;
   display: flex;
-  width: 80px;
-  height: 80px;
+  width: 87px;
+  height: 82px;
   justify-content: center;
   flex-direction: column;
   font-weight: bold;
@@ -29,6 +29,7 @@
   background-color: var(--color-blue);
   color: var(--color-foreground);
   z-index: 2;
+  font-weight: 500;
 }
 
 .date {
@@ -38,17 +39,26 @@
   background-color: transparent;
 }
 
-.imgDate span, .date span {
+.imgDate span:nth-of-type(2), .date span:nth-of-type(2) {
   font-size: 14px;
   line-height: 22px;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
+.diffDate {
+  height: 66px;
+}
+
+.diffDate span:nth-of-type(1) {
+  font-size: 20px;
+  line-height: 24px;
+}
+
 .img {
   width: 100%;
   height: auto;
-  max-height: 265px;
+  max-height: 250px;
   object-fit: cover;
 }
 
@@ -61,18 +71,18 @@
 }
 
 .content time {
-  font-weight: bold;
+  font-weight: 500;
   font-size: 14px;
-  line-height: 18px;
+  line-height: 22px;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--color-grey);
 }
 
-.content h2 {
-  font-weight: bold;
+.content h3 {
+  font-weight: 500;
   font-size: 24px;
-  line-height: 30px;
+  line-height: 28px;
   color: black;
   margin: 4px 0 0;
 }
@@ -89,7 +99,7 @@
   justify-content: center;
   position: relative;
   width: 100%;
-  height: 265px;
+  height: 250px;
   background-color: var(--color-beige);
 }
 
@@ -115,6 +125,39 @@
 .info {
   margin: 5px 0 16px 0;
   white-space: pre-wrap;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.info[data-state="open"] {
+  display: flex;
+}
+
+.infoContainer {
+  display: flex;
+  gap: 7px;
+}
+
+.infoContainer span:first-of-type {
+  font-weight: 500;
+}
+
+.infoContainer:last-of-type {
+  flex-direction: column;
+  gap: 3px;
+}
+
+.infoContainer:last-of-type span:last-of-type {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.info a:link,
+.info a:visited {
+  color: var(--color-dark-purple);
+  font-weight: 500;
 }
 
 .tagList {
@@ -133,6 +176,7 @@
   text-decoration: underline;
   background-color: transparent;
   text-align: start;
+  font-weight: 500;
 }
 
 .tagList__item {
@@ -143,7 +187,7 @@
   background: var(--color-beige);
   color: var(--color-foreground);
   border-radius: 100px;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 12px;
   line-height: 14px;
   letter-spacing: 1px;

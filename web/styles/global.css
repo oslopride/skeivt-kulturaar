@@ -64,7 +64,7 @@ body {
 body,
 input,
 textarea,
-.mantine-NativeSelect-input, button {
+.mantine-NativeSelect-input, button, p {
   font-family: var(--font-body);
 }
 
