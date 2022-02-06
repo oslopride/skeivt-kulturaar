@@ -30,7 +30,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   await runMiddleware(req, res, cors);
 
   const fields =
-    'address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,image,postalCode,ticketPrice';
+    'address,ageLimit,county,digitalEventUrl,eventOrganizer,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,image,postalCode,ticketPrice';
   const query = `*[_type == 'eventRequest' && approved == true]{${fields}}`;
   const sanityEvents: Array<PublicSanityEvent> = await sanity.fetch(query);
 
