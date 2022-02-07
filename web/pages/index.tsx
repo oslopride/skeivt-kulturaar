@@ -34,8 +34,8 @@ export default function EventList({
       <ol className={styles.eventList}>
         {events.map((event) => {
           const tags = [
-            ...event.eventFilters.filter((filter) => filter),
-            ...event.eventTypes.filter((eventType) => eventType),
+            ...(event.eventFilters || []).filter((filter) => filter),
+            ...(event.eventTypes || []).filter((eventType) => eventType),
           ];
           return (
             <li key={event._id}>
