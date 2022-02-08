@@ -16,11 +16,12 @@ export type EventProps = {
   address?: string;
   eventLink?: string;
   digitalLink?: string;
-  tags: Array<string>;
   info?: string;
   county?: string;
   ageLimit?: number;
   ticketPrice?: number;
+  filters?: Array<string>;
+  types?: Array<string>;
 };
 export function Event({
   startDate: providedStartDate,
@@ -31,11 +32,12 @@ export function Event({
   imgUrl,
   organizer,
   address,
-  tags,
   info,
   county,
   ageLimit,
   ticketPrice,
+  filters,
+  types,
 }: EventProps) {
   const [isOpen, setIsOpen] = useState(false);
   const startDate = new Date(providedStartDate);
@@ -49,6 +51,7 @@ export function Event({
   const endDateFormatted = isSameEndDay
     ? format(endDate, `kk.mm`, { locale: nb })
     : format(endDate, `d MMM yy 'kl.' kk.mm`, { locale: nb });
+
   return (
     <div className={styles.event}>
       <div className={styles.imgContainer}>
@@ -73,11 +76,13 @@ export function Event({
         <h3>{eventName}</h3>
         <p>{address && `${address}, ${county}`}</p>
         <ul className={styles.tagList}>
-          {tags.map((tag) => (
-            <li key={tag} className={styles.tagList__item}>
-              {tag}
-            </li>
-          ))}
+          {(types || [])
+            .filter((eventType) => eventType)
+            .map((tag) => (
+              <li key={tag} className={styles.tagList__item}>
+                {tag}
+              </li>
+            ))}
         </ul>
         {eventLink && (
           <a href={eventLink} className={styles.eventLink} target={`_${eventName || 'blank'}`} rel="noreferrer">
@@ -110,6 +115,15 @@ export function Event({
               <span>Om arrangementet:</span>
               <span>{info}</span>
             </div>
+            <ul className={styles.tagList}>
+              {(filters || [])
+                .filter((filter) => filter)
+                .map((tag) => (
+                  <li key={tag} className={styles.tagList__item}>
+                    {tag}
+                  </li>
+                ))}
+            </ul>
           </DisclosurePanel>
           <DisclosureButton className={styles.readMore}>
             {isOpen ? 'Les mindre' : 'Les mer om arrangementet +'}
