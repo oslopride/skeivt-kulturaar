@@ -110,6 +110,15 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
       events.push(newEvent);
     }
   }
+  events.sort((a, b) => {
+    if (a.eventStart < b.eventStart) {
+      return -1;
+    }
+    if (a.eventStart > b.eventStart) {
+      return 1;
+    }
+    return 0;
+  });
   const props: EventListProps = {
     image: image || null,
     title: res?.configuration?.header?.title || null,
