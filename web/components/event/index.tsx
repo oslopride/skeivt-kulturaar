@@ -36,8 +36,8 @@ export function Event({
   county,
   ageLimit,
   ticketPrice,
-  filters = [],
-  types = [],
+  filters,
+  types,
 }: EventProps) {
   const [isOpen, setIsOpen] = useState(false);
   const startDate = new Date(providedStartDate);
@@ -76,7 +76,7 @@ export function Event({
         <h3>{eventName}</h3>
         <p>{address && `${address}, ${county}`}</p>
         <ul className={styles.tagList}>
-          {types
+          {(types || [])
             .filter((eventType) => eventType)
             .map((tag) => (
               <li key={tag} className={styles.tagList__item}>
@@ -116,7 +116,7 @@ export function Event({
               <span>{info}</span>
             </div>
             <ul className={styles.tagList}>
-              {filters
+              {(filters || [])
                 .filter((filter) => filter)
                 .map((tag) => (
                   <li key={tag} className={styles.tagList__item}>
