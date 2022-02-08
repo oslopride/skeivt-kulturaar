@@ -51,6 +51,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       events.push(newEvent);
     }
   }
+  events.sort((a, b) => {
+    if (a.eventStart < b.eventStart) {
+      return -1;
+    }
+    if (a.eventStart > b.eventStart) {
+      return 1;
+    }
+    return 0;
+  });
 
   res.json(events);
 }

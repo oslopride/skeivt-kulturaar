@@ -8,7 +8,7 @@ export default class _Document extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="no">
         <Head>
           <link rel="stylesheet" href="https://use.typekit.net/rmr1bwf.css" />
         </Head>
