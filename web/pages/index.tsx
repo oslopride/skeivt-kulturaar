@@ -33,10 +33,6 @@ export default function EventList({
       <SEO image={metaImage} title={metaTitle} description={metaDescription} />
       <ol className={styles.eventList}>
         {events.map((event) => {
-          const tags = [
-            ...(event.eventFilters || []).filter((filter) => filter),
-            ...(event.eventTypes || []).filter((eventType) => eventType),
-          ];
           return (
             <li key={event._id}>
               <Event
@@ -47,12 +43,13 @@ export default function EventList({
                 digitalLink={event.digitalEventUrl}
                 eventName={event.eventName}
                 organizer={event.eventOrganizer}
-                tags={tags}
                 imgUrl={event.image}
                 info={event.eventDescription}
                 county={event.county}
                 ageLimit={event.ageLimit}
                 ticketPrice={event.ticketPrice}
+                filters={event.eventFilters}
+                types={event.eventTypes}
               />
             </li>
           );
