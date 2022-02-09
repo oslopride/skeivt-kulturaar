@@ -98,6 +98,7 @@ export default {
       name: "approved",
       title: "Er denne forespørselen allerede godkjent",
       type: "boolean",
+      hidden: true,
     },
   ],
   preview: {
