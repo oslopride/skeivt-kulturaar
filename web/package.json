@@ -12,6 +12,7 @@
     "@mantine/core": "^3.6.4",
     "@mantine/hooks": "^3.6.4",
     "@mantine/next": "^3.6.4",
+    "@netlify/plugin-nextjs": "^4.2.5",
     "@reach/disclosure": "^0.16.2",
     "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/client": "^2.23.2",
