@@ -55,6 +55,6 @@ export const getStaticProps: GetStaticProps = async () => {
       metaDescription: res?.configuration?.meta?.description || '',
       metaImage,
     },
-    revalidate: 86400, // 24 hrs
+    revalidate: 3600, // 1 hr
   };
 };
