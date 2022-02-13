@@ -131,6 +131,6 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
 
   return {
     props,
-    revalidate: 60,
+    revalidate: 3600, // 1 hr
   };
 };

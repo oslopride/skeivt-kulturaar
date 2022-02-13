@@ -5,12 +5,12 @@ import sanity, { DATASET, PROJECT_ID, urlFor } from '../sanity';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 
-export default function About({
+export default function PrivacyPolicy({
   image,
   title,
   subTitle,
-  aboutBody,
-  aboutTitle,
+  bodyText,
+  bodyTitle,
   metaTitle,
   metaDescription,
   metaImage,
@@ -19,8 +19,8 @@ export default function About({
     <Layout title={title} subTitle={subTitle} image={image}>
       <SEO image={metaImage} title={metaTitle} description={metaDescription} />
 
-      <h2>{aboutTitle}</h2>
-      <BlockContent blocks={aboutBody} projectId={PROJECT_ID} dataset={DATASET} />
+      <h2>{bodyTitle}</h2>
+      <BlockContent blocks={bodyText} projectId={PROJECT_ID} dataset={DATASET} />
     </Layout>
   );
 }
@@ -29,16 +29,16 @@ export type Data = {
   image?: string | null;
   title?: string | null;
   subTitle?: string | null;
-  aboutBody?: any;
-  aboutTitle?: string | null;
+  bodyText?: any;
+  bodyTitle?: string | null;
   metaTitle: string;
   metaDescription: string;
   metaImage: string;
 };
 export const getStaticProps: GetStaticProps = async () => {
   const query = `{
-    "configuration": *[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0],
-    "about": *[_id in ["global_about", "drafts.global_about"]] | order(_updatedAt desc) [0],
+    "configuration": *[_id in ["global_configuration"]] [0],
+    "privacy": *[_id in ["global_privacy"]] [0],
   }`;
   const res = await sanity.fetch(query);
   const image = urlFor(res?.configuration?.header?.background).auto('format').url().toString();
@@ -46,8 +46,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      aboutBody: res?.about?.body,
-      aboutTitle: res?.about?.title,
+      bodyText: res?.privacy?.body || null,
+      bodyTitle: res?.privacy?.title || null,
       image: image || null,
       title: res?.configuration?.header?.title || null,
       subTitle: res?.configuration?.header?.subtitle || null,
