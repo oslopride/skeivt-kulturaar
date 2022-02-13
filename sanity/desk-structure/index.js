@@ -2,12 +2,13 @@ import S from '@sanity/desk-tool/structure-builder';
 import EditIcon from 'part:@sanity/base/edit-icon';
 
 import aboutPage from './about';
+import privacy from './privacy';
 import events from './events';
 import configuration from './configuration';
 
 // Hide document types that we already have a structure definition for
 const hiddenDocTypes = (listItem) =>
-  !['about', 'eventRequest', 'configuration'].includes(listItem.getId());
+  !['about', 'privacy', 'eventRequest', 'configuration'].includes(listItem.getId());
 
 export default () =>
   S.list()
@@ -15,6 +16,7 @@ export default () =>
     .items([
       aboutPage,
       events,
+      privacy,
       configuration,
       ...S.documentTypeListItems().filter(hiddenDocTypes),
     ]);

@@ -12,6 +12,7 @@ import sanity, { urlFor } from '../sanity';
 import styles from '../styles/form.module.css';
 import Thanks from '../components/thanks';
 import SEO from '../components/seo';
+import Link from 'next/link';
 
 const COUNTIES = [
   'Oslo',
@@ -365,6 +366,9 @@ export default function SubmitEvent({
                 </label>
                 <input type="checkbox" name="agree" className={styles.input} required />
               </div>
+              <Link href="/privacy">
+                Les vår personvernerklæring for mer informasjon om hvordan dine opplysninger behandles.
+              </Link>
             </fieldset>
             <button className={styles.button} disabled={submitting}>
               Send inn arrangement
@@ -408,6 +412,6 @@ export const getStaticProps: GetStaticProps = async () => {
       header: res?.form?.title || 'Meld inn ditt arrangement',
       headerDescription: res?.form?.description || '',
     },
-    revalidate: 60,
+    revalidate: 3600, // 1 hr
   };
 };

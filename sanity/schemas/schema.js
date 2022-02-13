@@ -6,6 +6,7 @@ import schemaTypes from "all:part:@sanity/base/schema-type";
 
 // Documents
 import aboutPage from "./about";
+import privacy from "./privacy";
 import eventRequest from "./event";
 import configuration from "./configuration";
 
@@ -18,6 +19,7 @@ export default createSchema({
 	types: schemaTypes.concat([
     configuration,
 		aboutPage,
+		privacy,
 		eventRequest,
 	])
 });
