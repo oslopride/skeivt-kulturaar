@@ -65,7 +65,11 @@
   transition: color 0.3s, background 0.3s;
   border: none;
   text-align: center;
-} 
+}
+
+.footer a:hover {
+  background-color: var(--color-purple);
+}
 
 .footer p {
   text-align: center;
