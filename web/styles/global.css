@@ -14,6 +14,8 @@
   --color-beige: #edede5;
   --color-light-beige: #f6f6f0;
   --color-cream: #fffff5;
+  --color-links: var(--color-dark-purple);
+  --color-links-hover: var(--color-black);
   --color-foreground: var(--color-black);
   --color-foreground-light: var(--color-cream);
   --color-background: var(--color-cream);
@@ -42,8 +44,8 @@ h3 {
 }
 
 :focus {
-  outline: var(--color-links) solid 2px;
-  outline-offset: 2px;
+  outline: var(--color-links) solid 1px;
+  outline-offset: 1px;
 }
 
 #__next {
