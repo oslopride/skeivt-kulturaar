@@ -2,23 +2,19 @@
   width: 100%;
   margin-right: auto;
   margin-left: auto;
-  margin-top: 64px;
+  margin-top: 40px;
   margin-bottom: 80px;
   flex: 1 1 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-@media screen and (min-width: 450) {
-  .main {
-    --gutter: 16px;
-    max-width: calc(100% - var(--gutter) * 2);
-  }
+  --gutter: 16px;
+  max-width: calc(100% - var(--gutter) * 2);
 }
 
 @media screen and (min-width: 890px) {
   .main {
+    margin-top: 64px;
     width: 890px;
   }
 }
