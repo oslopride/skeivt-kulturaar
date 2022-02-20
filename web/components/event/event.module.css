@@ -122,6 +122,10 @@
   margin-bottom: 15px;
 }
 
+.eventLink:hover {
+  background-color: var(--color-purple);
+}
+
 .info {
   margin: 5px 0 16px 0;
   white-space: pre-wrap;
