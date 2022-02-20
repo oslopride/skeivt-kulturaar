@@ -118,7 +118,7 @@ input.searchBox:disabled {
 
 /* Position and sizing of burger button */
 .bm-burger-button {
-  position: fixed;
+  position: absolute;
   display: none;
   width: 32px;
   height: 30px;
