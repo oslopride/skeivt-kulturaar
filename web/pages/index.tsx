@@ -32,9 +32,9 @@ export default function EventList({
     <Layout image={image} title={title} subTitle={subTitle}>
       <SEO image={metaImage} title={metaTitle} description={metaDescription} />
       <ol className={styles.eventList}>
-        {events.map((event) => {
+        {events.map((event, index) => {
           return (
-            <li key={event._id}>
+            <li key={`${event._id}-${index}`}>
               <Event
                 startDate={event.eventStart}
                 endDate={event.eventEnd}
