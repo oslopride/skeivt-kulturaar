@@ -75,3 +75,27 @@
   text-align: center;
   line-height: 24px;
 }
+
+.filterGroup {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.filter {
+  margin: 5px 10px 5px 0;
+}
+
+@media screen and (min-width: 890px) {
+  .filterGroup {
+    width: 840px;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  .filterGroup {
+    width: 1280px;
+  }
+}
