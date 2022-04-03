@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
     // for each date of an event, create a new event
     for (const { eventEnd, eventStart } of event.eventDates || []) {
       const image = event.image ? urlFor(event.image).size(400, 250).auto('format').url().toString() : null;
-      const { eventDates, ...oldEvent } = event;
+      const { ...oldEvent } = event;
       const newEvent: EventProps = {
         ...oldEvent,
         image,
