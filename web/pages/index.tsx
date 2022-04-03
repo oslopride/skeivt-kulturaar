@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
     '_id,address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,eventOrganizer,image,postalCode,ticketPrice';
   const query = `{
     "configuration": *[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0],
-    "events": *[_type == 'eventRequest' && approved == true]{${fields}},
+    "events": *[_type == 'eventRequest' && approved == true && !(_id in path('drafts.**'))]{${fields}},
   }`;
   const res = await sanity.fetch(query);
   const image = urlFor(res?.configuration?.header?.background).auto('format').url().toString();
