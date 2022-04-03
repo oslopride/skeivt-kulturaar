@@ -92,17 +92,13 @@ export default function EventList({
             return relevantEvent;
           })
           .filter((event) => {
-            let relevantEvent = true;
-            if (county.length > 0) {
-              relevantEvent = county.includes(event.county);
-            }
-            if (type.length > 0) {
-              relevantEvent = relevantEvent || event.eventTypes.some((type) => type.includes(type));
-            }
-            if (filter.length > 0) {
-              relevantEvent = relevantEvent || event.eventFilters.some((filter) => filter.includes(filter));
-            }
-            return relevantEvent;
+            return county.length === 0 || county.includes(event.county);
+          })
+          .filter((event) => {
+            return type.length === 0 || event.eventTypes.some((eventType) => type.includes(eventType));
+          })
+          .filter((event) => {
+            return filter.length === 0 || event.eventFilters.some((eventFilter) => filter.includes(eventFilter));
           })
           .map((event, index) => {
             return (
