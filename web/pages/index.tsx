@@ -92,12 +92,21 @@ export default function EventList({
             return relevantEvent;
           })
           .filter((event) => {
+            if (!county) {
+              return false;
+            }
             return county.length === 0 || county.includes(event.county);
           })
           .filter((event) => {
+            if (!event.eventTypes) {
+              return false;
+            }
             return type.length === 0 || event.eventTypes.some((eventType) => type.includes(eventType));
           })
           .filter((event) => {
+            if (!event.eventFilters) {
+              return false;
+            }
             return filter.length === 0 || event.eventFilters.some((eventFilter) => filter.includes(eventFilter));
           })
           .map((event, index) => {
