@@ -86,6 +86,36 @@
 
 .filter {
   margin: 5px 10px 5px 0;
+  max-width: 300px;
+  min-width: 200px;
+}
+
+.filter ::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: black;
+}
+.filter :-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: black;
+  opacity: 1;
+}
+.filter ::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: black;
+  opacity: 1;
+}
+.filter :-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: black;
+}
+.filter ::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: black;
+}
+
+.filter ::placeholder {
+  /* Most modern browsers support this now. */
+  color: black;
 }
 
 @media screen and (min-width: 890px) {
