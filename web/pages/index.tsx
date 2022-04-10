@@ -32,9 +32,9 @@ export default function EventList({
     <Layout image={image} title={title} subTitle={subTitle}>
       <SEO image={metaImage} title={metaTitle} description={metaDescription} />
       <ol className={styles.eventList}>
-        {events.map((event) => {
+        {events.map((event, index) => {
           return (
-            <li key={event._id}>
+            <li key={`${event._id}-${index}`}>
               <Event
                 startDate={event.eventStart}
                 endDate={event.eventEnd}
@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
     '_id,address,ageLimit,county,digitalEventUrl,eventDates,eventDescription,eventFilters,eventLink,eventName,eventTypes,eventOrganizer,image,postalCode,ticketPrice';
   const query = `{
     "configuration": *[_id in ["global_configuration", "drafts.global_configuration"]] | order(_updatedAt desc) [0],
-    "events": *[_type == 'eventRequest' && approved == true]{${fields}},
+    "events": *[_type == 'eventRequest' && approved == true && !(_id in path('drafts.**'))]{${fields}},
   }`;
   const res = await sanity.fetch(query);
   const image = urlFor(res?.configuration?.header?.background).auto('format').url().toString();
@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps<EventListProps> = async () => {
     // for each date of an event, create a new event
     for (const { eventEnd, eventStart } of event.eventDates || []) {
       const image = event.image ? urlFor(event.image).size(400, 250).auto('format').url().toString() : null;
-      const { eventDates, ...oldEvent } = event;
+      const { ...oldEvent } = event;
       const newEvent: EventProps = {
         ...oldEvent,
         image,
