@@ -80,13 +80,13 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
   margin-bottom: 20px;
 }
 
 .filter {
   margin: 5px 10px 5px 0;
-  max-width: 300px;
+  max-width: 100%;
+  width: 100%;
   min-width: 200px;
 }
 
@@ -118,9 +118,18 @@
   color: black;
 }
 
+@media screen and (min-width: 520px) {
+  .filterGroup {
+    width: 480px;
+  }
+}
+
 @media screen and (min-width: 890px) {
   .filterGroup {
     width: 840px;
+  }
+  .filter {
+    max-width: 300px;
   }
 }
 
