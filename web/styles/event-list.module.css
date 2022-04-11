@@ -129,12 +129,15 @@
     width: 840px;
   }
   .filter {
-    max-width: 300px;
+    max-width: 410px;
   }
 }
 
 @media screen and (min-width: 1300px) {
   .filterGroup {
     width: 1280px;
+  }
+  .filter {
+    max-width: 300px;
   }
 }
