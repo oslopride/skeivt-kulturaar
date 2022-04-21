@@ -41,7 +41,19 @@ export default function EventList({
       <div className={styles.filterGroup}>
         <MultiSelect
           className={styles.filter}
-          data={['Agder', 'Oslo', 'Trøndelag', 'Vestlandet', 'Møre og Romsdal', 'Telemark', 'Innlandet']}
+          data={[
+            'Oslo',
+            'Viken',
+            'Rogaland',
+            'Møre og Romsdal',
+            'Nordland',
+            'Innlandet',
+            'Vestfold og Telemark',
+            'Agder',
+            'Vestland',
+            'Trøndelag',
+            'Troms og Finnmark',
+          ]}
           clearable
           value={county}
           onChange={setCounty}
@@ -49,7 +61,17 @@ export default function EventList({
         />
         <MultiSelect
           className={styles.filter}
-          data={['Konsert', 'Dans', 'Fest', 'Debatt', 'Forestilling', 'Kino', 'Annet']}
+          data={[
+            'Musikk',
+            'Dans',
+            'Teater',
+            'Drag',
+            'Film',
+            'Litteratur / Poesi',
+            'Samtale / Debatt',
+            'Workshop',
+            'Andre kunstformer',
+          ]}
           clearable
           value={type}
           onChange={setType}
@@ -57,7 +79,7 @@ export default function EventList({
         />
         <MultiSelect
           className={styles.filter}
-          data={['Universelt utformet', 'Tegnspråktolk', 'WC', 'Rusfritt']}
+          data={['Universelt utformet', 'Tegnespråktolk', 'WC', 'Rusfritt']}
           clearable
           value={filter}
           onChange={setFilter}
