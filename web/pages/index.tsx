@@ -71,6 +71,7 @@ export default function EventList({
             'Samtale / Debatt',
             'Workshop',
             'Andre kunstformer',
+            'Pride',
           ]}
           clearable
           value={type}
