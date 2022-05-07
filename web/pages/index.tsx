@@ -121,13 +121,13 @@ export default function EventList({
             return county.length === 0 || county.includes(event.county);
           })
           .filter((event) => {
-            if (!event.eventTypes) {
+            if (!event.eventTypes && type.length > 0) {
               return false;
             }
             return type.length === 0 || event.eventTypes.some((eventType) => type.includes(eventType));
           })
           .filter((event) => {
-            if (!event.eventFilters) {
+            if (!event.eventFilters && filter.length > 0) {
               return false;
             }
             return filter.length === 0 || event.eventFilters.some((eventFilter) => filter.includes(eventFilter));
