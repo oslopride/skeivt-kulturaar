@@ -15,6 +15,7 @@ const sanity = sanityClient({
   dataset: DATASET,
   token: process.env.SANITY_ACCESS_TOKEN,
   apiVersion: '2021-12-19',
+  useCdn: false,
 });
 
 const builder = imageUrlBuilder(sanity);
